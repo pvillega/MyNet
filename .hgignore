@@ -1,0 +1,12 @@
+syntax: glob
+target/**
+bin/**
+.manager/**
+*.log*
+*.lck*
+classes/**
+.settings/**
+test-build/**
+exploded-archives/**
+
+
