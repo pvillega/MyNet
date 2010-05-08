@@ -14,6 +14,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.web.RequestParameter;
 import org.jboss.seam.framework.EntityHome;
+import org.jboss.seam.international.StatusMessage.Severity;
 
 import com.perevillega.mynet.model.Link;
 import com.perevillega.mynet.model.Tag;
@@ -32,7 +33,7 @@ public class LinkHome extends EntityHome<Link> {
 		}
 	}
 
-	@Override	
+	@Override
 	public void create() {
 		super.create();
 	}
@@ -61,16 +62,16 @@ public class LinkHome extends EntityHome<Link> {
 		EntityManager em = this.getEntityManager();
 
 		String taglist = instance.getTaglist();
-		
+
 		if (taglist != null) {
 			StringTokenizer st = new StringTokenizer(taglist, ",");
 			while (st.hasMoreTokens()) {
 				String name = st.nextToken().trim();
-				
+
 				Query queryTagByName = em.createNamedQuery("findTagByName");
-				queryTagByName.setParameter("name", name);				
+				queryTagByName.setParameter("name", name);
 				Collection tags = queryTagByName.getResultList();
-				
+
 				if (!tags.isEmpty()) {
 					// existing tag, we only take the first one
 					Iterator it = tags.iterator();

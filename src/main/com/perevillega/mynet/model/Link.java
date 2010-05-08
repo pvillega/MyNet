@@ -164,8 +164,7 @@ public class Link implements Serializable {
 	}
 
 	public void setUrl(String url) {
-		this.url = normalizeURL(url);
-		validate();
+		this.url = normalizeURL(url);		
 	}
 	
 	private String normalizeURL(String url) {
@@ -237,21 +236,18 @@ public class Link implements Serializable {
 	}
 	
 	//we can only validate http
-	public void validate(){
-		boolean valid = false;
-		if(url.startsWith("http")) {
+	public void validate(){		
+		if(url.startsWith("http")) {			
 			URL urltest;
 			try {
 				urltest = new URL(this.url);
 				HttpURLConnection conn = (HttpURLConnection) urltest.openConnection();
-				
 				//according to W3C document, URL any content-length of 0 or greater is valid, unless a HTTP status code is sent and in a few other (rare?) cases.				
-				if(conn.getContentLength() > 0 && conn.getResponseCode() == HttpURLConnection.HTTP_ACCEPTED) {
-					valid = true;
+				if(conn.getResponseCode() == HttpURLConnection.HTTP_ACCEPTED || conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					this.setValidated(true);
 					this.setDateValidation(new Date());
 				}				
 				conn.disconnect();
-				//TODO store date of last valid test for admins?
 			} catch (MalformedURLException e) {
 				//it should never come here, report on logs
 				e.printStackTrace();
@@ -262,9 +258,8 @@ public class Link implements Serializable {
 			
 		} else {
 			//by now, url that are not http are considered valid
-			valid = true;
-		}
-		this.validated = valid;
+			this.setValidated(true);
+		}		
 	}
 	
 	//TODO: normalise URL's!
@@ -278,7 +273,7 @@ public class Link implements Serializable {
 		this.selected = selected;
 	}
 	
-	@Basic	
+	@Temporal(TemporalType.DATE)	
 	public Date getDateValidation() {
 		return dateValidation;
 	}
@@ -292,7 +287,5 @@ public class Link implements Serializable {
 			t.removeLink(this);
 		}
 	}
-	
-	
 		
 }

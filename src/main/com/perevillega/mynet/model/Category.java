@@ -24,12 +24,16 @@ import org.hibernate.validator.NotNull;
 	@NamedQuery(
 		    name="findAllCategories",
 		    query="SELECT OBJECT(category) FROM Category category"
-		    	),	
+		    	),
+	@NamedQuery(
+		    name="findCategoryByName",
+		    query="SELECT OBJECT(category) FROM Category category WHERE category.name = :name"
+		    	),
 	})
 public class Category implements Serializable
 {
     private Long id;
-    private Integer version;
+    private Integer version;    
     private String name;
     private List<Link> links = new ArrayList<Link>();
     private Category parent;
@@ -37,6 +41,7 @@ public class Category implements Serializable
     private boolean selected;
     private int numLinks;
     private int numChildren;
+    private String oldName;
     
 
     @Override
@@ -100,7 +105,7 @@ public class Category implements Serializable
         this.version = version;
     }
 
-    @Length(max = 40)
+    @Length(max = 40)    
     public String getName() {
         return name;
     }
@@ -165,5 +170,5 @@ public class Category implements Serializable
 	public void setNumChildren(int numChildren) {
 		this.numChildren = numChildren;
 	}
-	
+
 }

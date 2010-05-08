@@ -9,4 +9,11 @@
    <action execute="#{linkList.setFrom('/allLinks.xhtml')}" />   
    <action execute="#{linkList.setCreate(true)}" />
    
+   <!--  stores the first result of the query in a page parameter to allow for pagination -->
+   <param name="firstResult" value="#{linkList.firstResult}" />
+   <!--  enables ordering of columns, remove to disable -->
+   <param name="sort" value="#{linkList.orderColumns}"/>
+   <param name="dir" value="#{linkList.orderDirection}"/>
+   <param name="prevSort" value="#{linkList.prevSanitizedOrderByParamsStr}"/>
+   
 </page>

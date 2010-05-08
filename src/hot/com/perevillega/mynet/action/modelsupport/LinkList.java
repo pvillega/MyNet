@@ -10,6 +10,7 @@ import org.jboss.seam.annotations.Scope;
 
 import com.perevillega.mynet.action.queries.EnhancedSortEntityQuery;
 import com.perevillega.mynet.model.Link;
+import com.perevillega.mynet.model.Category;
 
 @Name("linkList")
 @Scope(ScopeType.CONVERSATION)
@@ -19,16 +20,18 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 		"lower(link.name) like concat('%',lower(#{linkList.name}),'%')",
 		"lower(link.url) like concat('%',lower(#{linkList.url}),'%')",
 		"lower(link.description) like concat('%',lower(#{linkList.description}),'%')",
+		"link.category = #{linkList.category}",
 		};
 
 	
 	private String name;	
 	private String url;	
 	private String description;
+	private Category category;
 	
 	private String title;
 	private String from;
-	private boolean create;
+	private boolean create;	
 	
     public LinkList()
     {
@@ -61,10 +64,20 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public void cleanSearch() {
-		this.name = "";
-		this.url = "";
+		this.name = null;
+		this.url = null;
+		this.description = null;
+		this.category = null;
 	}
 
 	public String getTitle() {

@@ -239,7 +239,6 @@ table.radio input[type=radio] {
 	text-align: center;	
 }
 .tagc5 {
-	width: 15%;
 }
 
 /*Category list*/
@@ -263,8 +262,7 @@ table.radio input[type=radio] {
 	width: 75px;	
 	text-align: center;	
 }
-.catc6 {
-	width: 15%;
+.catc6 {	
 }
 /*Link list*/
 .linkc1 {
@@ -291,19 +289,31 @@ table.radio input[type=radio] {
 	padding-left: 10px;	
 }
 .linkc7 {
-	width: 50px;
+	width: 80px;
 	padding-left: 10px;		
 }
 .linkc8 {
-	width: 50px;
+	width: 60px;
 	padding-left: 10px;	
 }
 .linkc9 {
+	width: 80px;
+	padding-left: 10px;	
+}
+.linkc10 {
 	width: 175px;
 	padding-left: 10px;
 }
-.linkc10 {
-	width: 15%;
+.linkc11 {
+	
+}
+
+/*rows*/
+.row1 {
+	background-color: #BED6F8;
+}
+.row2 {
+	background-color: #FFFFEF; 
 }
 
 /* s:link */

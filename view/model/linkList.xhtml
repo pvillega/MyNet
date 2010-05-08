@@ -29,6 +29,14 @@
                 <h:inputText id="description" value="#{linkList.description}"/>
             </s:decorate>
             
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Category</ui:define>
+                <h:selectOneMenu value="#{linkList.category}">
+					<s:selectItems value="#{categoryList}" var="category" label="#{category.name}" itemValue="#{category}" noSelectionLabel="Filter by category"/>
+					<s:convertEntity />
+				</h:selectOneMenu>
+            </s:decorate>
+            
         </rich:simpleTogglePanel>
         
         <div class="actionButtons">
@@ -47,7 +55,8 @@
             <h:dataTable id="linkList" var="link"
                    value="#{linkList.resultList}"
                    rendered="#{not empty linkList.resultList}"
-                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10">
+                   rowClasses="row1,row2" cellspacing="0"                   
+                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10,linkc11">
                                       
                 <h:column>
                     <f:facet name="header"> </f:facet>                    
@@ -108,7 +117,7 @@
                     <f:facet name="header">
                     	<ui:include src="../layout/sort.xhtml">
                 			<ui:param name="entityList" value="#{linkList}"/>
-                			<ui:param name="propertyLabel" value="Date"/>
+                			<ui:param name="propertyLabel" value="Date Added"/>
         			        <ui:param name="propertyPath" value="link.date asc"/>
 		                </ui:include>
                     </f:facet>
@@ -126,6 +135,19 @@
 		                </ui:include>
                     </f:facet>
                     #{link.hidden?'YES':'NO'}                    
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                    	<ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Validated?"/>
+        			        <ui:param name="propertyPath" value="link.dateValidation asc"/>
+		                </ui:include>
+                    </f:facet>
+                    <h:outputText value="#{link.dateValidation}" rendered="#{link.validated}">
+  						<s:convertDateTime type="both" pattern="dd-MM-yyyy" />
+					</h:outputText>                  
                 </h:column>
                 
                 <h:column>

@@ -22,17 +22,12 @@ public class URIValidator implements Validator<URI>,PropertyConstraint {
 
 	@Override
 	public boolean isValid(Object uri) {
-		System.out.println("IN");
 		if(uri == null) return false;
-		System.out.println("not null");
 		if(!(uri instanceof String)) return false;
-		System.out.println("string");
 		try {
-			new java.net.URL((String)uri);
-			System.out.println("uri");
+			new java.net.URL((String)uri);			
 			return true;
-		} catch (Exception e) {
-			System.out.println("error: "+ e);
+		} catch (Exception e) {			
 			return false;
 		}		
 	}
