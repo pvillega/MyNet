@@ -63,7 +63,7 @@
                     </f:facet>                    
                     <s:link id="category"
                          value="#{category.name}"
-                   propagation="none"
+                   		 propagation="nest"
                          view="/model/category.xhtml">
                         <f:param name="categoryId"
                                 value="#{category.id}"/>
@@ -108,6 +108,7 @@
 	    	</s:link>
 	    	#{' '}
         	<s:button id="done"
+        	 		propagation="nest"
             	    value="Create category"
                 	view="/model/category.xhtml"/>
             <h:commandButton action="#{categoryListTools.removeSelected()}" value="Delete selected" />
@@ -121,8 +122,8 @@
            		<rich:treeNode>            		    
                		<s:link 
                         	value="#{category.name}"
-                  		 	propagation="none"
-                       	view="/model/category.xhtml">
+                  		 	propagation="nest"
+                       		view="/model/category.xhtml">
                         	<f:param name="categoryId" value="#{category.id}"/>
                    	</s:link>
                    	(#{category.numLinks})                    	

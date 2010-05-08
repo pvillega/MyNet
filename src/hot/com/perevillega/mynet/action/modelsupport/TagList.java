@@ -1,21 +1,23 @@
 package com.perevillega.mynet.action.modelsupport;
 
-import java.util.Arrays;
-import java.util.List;
+import static com.perevillega.mynet.action.settings.Settings.MAX_RESULTS;
 
+import java.util.Arrays;
+
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.core.Expressions.ValueExpression;
+import org.jboss.seam.annotations.Scope;
 
 import com.perevillega.mynet.action.queries.EnhancedSortEntityQuery;
 import com.perevillega.mynet.model.Tag;
-import static com.perevillega.mynet.action.settings.Settings.*;
 
 @Name("tagList")
+@Scope(ScopeType.CONVERSATION)
 public class TagList extends EnhancedSortEntityQuery<Tag>
 {
 	
 	private static final String[] RESTRICTIONS = {		
-		"lower(tag.name) like concat(lower('%',#{tagList.name}),'%')",};
+		"lower(tag.name) like concat('%',lower(#{tagList.name}),'%')",};
 
 	private String name;
 

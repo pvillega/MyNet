@@ -66,7 +66,7 @@
                     </f:facet>                    
                     <s:link id="tag"
                          value="#{tag.name}"
-                   propagation="none"
+                   	     propagation="nest"
                          view="/model/tag.xhtml">
                         <f:param name="tagId"
                                 value="#{tag.id}"/>
@@ -107,6 +107,7 @@
 	    	#{' '}
         	<s:button id="done"
             	    value="Create tag"
+            	    propagation="nest"
                 	view="/model/tag.xhtml"/>        
         	<h:commandButton action="#{tagListTools.removeSelected()}" value="Delete selected" />             
     </div>

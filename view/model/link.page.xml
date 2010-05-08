@@ -2,23 +2,19 @@
 <page xmlns="http://jboss.com/products/seam/pages"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
-      no-conversation-view-id="/model/linkList.xhtml">
+      no-conversation-view-id="/model/linkList.xhtml">   
    
-   <begin-conversation join="true"/>
-   
-   <navigation from-action="#{linkHome.persist}">
-       <end-conversation/>
+   <navigation from-action="#{linkHome.persist}">       
        <redirect view-id="/model/link.xhtml"/>
    </navigation>
    
-   <navigation from-action="#{linkHome.update}">
-       <end-conversation/>
+   <navigation from-action="#{linkHome.update}">       
        <redirect view-id="/model/link.xhtml"/>
    </navigation>
    
    <navigation from-action="#{linkHome.remove}">
        <end-conversation/>
-       <redirect view-id="/model/linkList.xhtml"/>
+       <redirect view-id="#{linkList.from}"/>
    </navigation>
    
 </page>

@@ -4,9 +4,9 @@
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
 
    <begin-conversation join="true"/>
-   <action execute="#{linkList.setEjbql('select link from Link link where link.hidden = true')}" />
-   <action execute="#{linkList.setTitle('List of private links')}" />
-   <action execute="#{linkList.setFrom('/privateLinks.xhtml')}" />   
-   <action execute="#{linkList.setCreate(false)}" />
+   <action execute="#{linkList.setEjbql('select link from Link link')}" />
+   <action execute="#{linkList.setTitle('List of links')}" />
+   <action execute="#{linkList.setFrom('/allLinks.xhtml')}" />   
+   <action execute="#{linkList.setCreate(true)}" />
    
 </page>

@@ -4,15 +4,11 @@
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
       no-conversation-view-id="/model/tagList.xhtml">
    
-   <begin-conversation join="true"/>
-   
    <navigation from-action="#{tagHome.persist}">
-       <end-conversation/>
        <redirect view-id="/model/tag.xhtml"/>
    </navigation>
    
    <navigation from-action="#{tagHome.update}">
-       <end-conversation/>
        <redirect view-id="/model/tag.xhtml"/>
    </navigation>
    

@@ -37,10 +37,8 @@
         </div>
         
     <rich:panel>
-        <f:facet name="header">Link List</f:facet>
-		make only this (links table) as component to list the content? allows for easy go back, etc
-		and we can set create only on mylinks, and the different browses as desired (layouts, etc)
-		on name, if owner -> edit, else -> view (display)
+        <f:facet name="header">#{linkList.title}</f:facet>
+        		
         <div class="results">
 
             <h:outputText value="No link exists"
@@ -76,9 +74,9 @@
 		                </ui:include>
                     </f:facet>
                     <s:link id="link"
-                         value="#{link.name}"
-                   propagation="none"
-                         view="/model/link.xhtml">
+                         value="#{link.name}"    
+                         propagation="nest"                                       		 
+                         view="/model/link.xhtml">                         
                         <f:param name="linkId"
                                 value="#{link.id}"/>
                         <f:param name="backButton" value="#{backButton}"/>
@@ -163,9 +161,10 @@
 	    	</s:link>
 	    	#{' '}
 	        <s:button id="create"
-	               value="Create link"
-	               propagation="end"
-	                view="/model/link.xhtml" />
+	               value="Create link"	     
+	               propagation="nest"        
+	               rendered="#{linkList.create}"  
+	                view="/model/link.xhtml" />	                
 	        <h:commandButton action="#{linkListTools.removeSelected()}" value="Delete selected" />
     	</div>
 

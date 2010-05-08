@@ -91,10 +91,10 @@
                       immediate="true"
                       rendered="#{linkHome.managed}">                      
             </h:commandButton>            	
-            <s:button propagation="end"
-                               id="cancel"
-                            value="Back"                            
-                             view="/model/linkList.xhtml" />            
+            <s:button id="cancel"
+                      value="Back" 
+                      propagation="end"                                                
+                      view="#{linkList.from}" />            
         </div>
 
     </h:form>
