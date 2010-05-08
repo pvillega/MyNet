@@ -1,0 +1,66 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tagForm">
+
+        <rich:panel>
+            <f:facet name="header">#{tagHome.managed ? 'Edit' : 'Add'} Tag</f:facet>
+
+            <s:decorate id="nameField" template="../layout/edit.xhtml">
+                <ui:define name="label">Label</ui:define>
+                <ui:define name="description">is the name of the tag</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{tagHome.instance.name}">
+                	<a:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="numLinksField" template="../layout/edit.xhtml">
+                <ui:define name="label"># Links</ui:define>
+                <ui:define name="description">links use this tag</ui:define>
+                <h:outputText id="numberLinks" required="false"
+                             value="#{tagHome.instance.numLinks}" />
+            </s:decorate>
+
+            <div style="clear:both">
+            	<span class="required">*</span> 
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tagHome.persist}"
+                       rendered="#{!tagHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tagHome.update}"
+                       rendered="#{tagHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tagHome.remove}"
+                      immediate="true"
+                       rendered="#{tagHome.managed}"/>            
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Back"                            
+                             view="/model/tagList.xhtml"/>    
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

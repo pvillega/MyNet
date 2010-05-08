@@ -1,0 +1,150 @@
+package com.perevillega.mynet.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
+
+@Entity
+@NamedQueries({
+@NamedQuery(
+	    name="findTagByName",
+	    query="SELECT OBJECT(tag) FROM Tag tag WHERE tag.name = :name"
+	    	),
+@NamedQuery(
+	    name="findAllTags",
+	    query="SELECT OBJECT(tag) FROM Tag tag"
+	    	)
+})	    	
+public class Tag implements Serializable
+{
+	
+	private Long id;
+    private Integer version;
+    private String name;
+    private List<Link> links = new ArrayList<Link>();
+    private boolean selected;
+    private int numLinks;
+
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());		
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Tag))
+			return false;
+		Tag other = (Tag) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;		
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {	
+		return this.name;
+	}
+
+	@Id @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Version
+    public Integer getVersion() {
+        return version;
+    }
+
+    private void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    @Length(max = 20)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @ManyToMany(mappedBy = "tags", fetch=FetchType.LAZY)
+	public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}   
+
+	public void removeLink(Link link) {
+		this.links.remove(link);
+	}
+	
+	public void addLink(Link link) {
+		this.links.add(link);
+	}
+	
+	public int numberLinks() {
+		return this.numLinks;
+	}
+
+	@Transient
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	@NotNull
+	public int getNumLinks() {
+		return numLinks;
+	}
+
+	public void setNumLinks(int numLinks) {
+		this.numLinks = numLinks;
+	}
+
+	public void remove(){		
+    	for(Link l: this.links) {
+    		l.removeTag(this);
+    	}		
+	}
+	
+}

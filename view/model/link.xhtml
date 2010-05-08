@@ -1,0 +1,104 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="linkForm">
+
+        <rich:panel>
+            <f:facet name="header">#{tagHome.managed ? 'Edit' : 'Add'} Link</f:facet>
+            
+            <s:decorate id="categoryField" template="../layout/edit.xhtml">
+                <ui:define name="label">Category</ui:define>
+                <ui:define name="description">is used to classify the link</ui:define>
+                <h:selectOneMenu value="#{linkHome.instance.category}" required="true">
+					<s:selectItems value="#{categoryList}" var="category" label="#{category.name}" itemValue="#{category}" noSelectionLabel="Select a category"/>
+					<s:convertEntity />
+					<a:support event="onblur" reRender="categoryField" bypassUpdates="true" ajaxSingle="true"/>
+				</h:selectOneMenu>                
+            </s:decorate>
+
+            <s:decorate id="nameField" template="../layout/edit.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <ui:define name="description">is a short identifier for the link</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{linkHome.instance.name}">
+                	<a:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="urlField" template="../layout/edit.xhtml">
+                <ui:define name="label">URL</ui:define>
+                <ui:define name="description">is the URL you want to store</ui:define>
+                <h:inputText id="url" required="true"
+                             value="#{linkHome.instance.url}">
+                	<a:support event="onblur" reRender="urlField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>             
+            </s:decorate>
+            
+            <s:decorate id="descriptionField" template="../layout/edit.xhtml">
+                <ui:define name="label">Description</ui:define>
+                <rich:editor id="descriptionEditor" required="false"                	
+            		value="#{linkHome.instance.description}" >
+            	</rich:editor>
+            </s:decorate>                       
+            
+            <s:decorate id="publicField" template="../layout/edit.xhtml">
+                <ui:define name="label">Private</ui:define>
+                <ui:define name="description">Selected if you don't want to share your link</ui:define>
+                <h:selectBooleanCheckbox value="#{linkHome.instance.hidden}" required="false" />                
+            </s:decorate>
+            
+            <s:decorate id="tagsField" template="../layout/edit.xhtml">
+            	<ui:define name="label">Tags</ui:define>
+            	<ui:define name="description">is a list of comma separated words that identify the link</ui:define>
+                <h:inputText value="#{linkHome.instance.taglist}" />                							
+            </s:decorate>
+                      
+            <s:decorate id="tagListField" template="../layout/edit.xhtml">
+                <ui:define name="label"> </ui:define>
+                <ui:define name="description">are the current tags</ui:define>
+				<b><h:outputText value="#{linkHome.instance.formattedTags()}" /></b>
+            </s:decorate>
+            
+            <div style="clear:both">
+            	<span class="required">*</span> 
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+        	<h:commandButton id="save"
+                          value="Save"
+                         action="#{linkHome.persist}"
+                       rendered="#{!linkHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{linkHome.update}"
+                       rendered="#{linkHome.managed}"/>
+            <h:commandButton id="delete"
+                      value="Delete"
+                      action="#{linkHome.remove}"                      
+                      immediate="true"
+                      rendered="#{linkHome.managed}">                      
+            </h:commandButton>            	
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Back"                            
+                             view="/model/linkList.xhtml" />            
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

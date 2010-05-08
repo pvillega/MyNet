@@ -5,23 +5,28 @@
                  xmlns:s="http://jboss.com/products/seam/taglib">
 
     <div class="prop">
-
-        <s:label styleClass="name #{invalid?'errors':''}">
-            <ui:insert name="label"/>
-            <s:span styleClass="required" rendered="#{required}">*</s:span>
-        </s:label>
-
-        <span class="value #{invalid?'errors':''}">
-            <s:validateAll>
-                <ui:insert/>
-            </s:validateAll>
-        </span>
-
-        <span class="error">
-            <h:graphicImage value="/img/error.gif" rendered="#{invalid}" styleClass="errors"/>
-            <s:message styleClass="errors"/>
-        </span>
-
+		<h:panelGrid columns="8" rowClasses="prop">
+	        <s:label styleClass="name #{invalid?'errors':''}">
+	            <ui:insert name="label"/>
+	            <s:span styleClass="required" rendered="#{required}">*</s:span>
+	        </s:label>
+	
+	        <span class="value #{invalid?'errors':''}">
+	            <s:validateAll>
+	                <ui:insert/>
+	            </s:validateAll>
+	        </span>
+	
+	        <span class="error">
+	            <h:graphicImage value="/img/error.gif" rendered="#{invalid}" styleClass="errors"/>
+	            <s:message styleClass="errors"/>
+	        </span>
+	        <!-- We force the description below the control -->
+	        <h:outputText value=" " rendered="#{!invalid}" />
+	        <h:outputText value=" " />
+	        <h:outputText value=" " />	         
+			<span class="description #{invalid?'errors':''}"><ui:insert name="description" /></span>
+		</h:panelGrid>
     </div>
 
 </ui:composition>

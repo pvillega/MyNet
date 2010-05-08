@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+
+   <!--  stores the first result of the query in a page parameter to allow for pagination -->        
+   <param name="firstResult" value="#{linkPrivateList.firstResult}" />
+   <param name="sort" value="#{linkPrivateList.orderColumns}"/>
+   <param name="dir" value="#{linkPrivateList.orderDirection}"/>
+   <param name="prevSort" value="#{linkPrivateList.prevSanitizedOrderByParamsStr}"/>
+</page>

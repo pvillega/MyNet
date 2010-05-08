@@ -1,3 +1,4 @@
+/*Default RichFaces CSS*/
 html {
 	overflow-y: scroll;
 }
@@ -215,4 +216,113 @@ table.radio td {
 
 table.radio input[type=radio] {
    vertical-align: bottom;
+}
+
+/*Custom CSS*/
+/**********************************************************************************************************/
+
+/*Tag list*/
+.tagc1 {
+	width: 15px;		
+}
+.tagc2 {
+	width: 30px;	
+	text-align: right;
+	padding-right: 5px;	
+}
+.tagc3 {
+	width: 150px;	
+	padding-left: 25px;			
+}
+.tagc4 {
+	width: 50px;	
+	text-align: center;	
+}
+.tagc5 {
+	width: 15%;
+}
+
+/*Category list*/
+.catc1 {
+	width: 15px;		
+}
+.catc2 {
+	width: 30px;	
+	text-align: right;
+	padding-right: 5px;	
+}
+.catc3 {	
+	width: 150px;
+	padding-left: 25px;			
+}
+.catc4 {
+	width: 50px;	
+	text-align: center;	
+}
+.catc5 {
+	width: 75px;	
+	text-align: center;	
+}
+.catc6 {
+	width: 15%;
+}
+/*Link list*/
+.linkc1 {
+	width: 15px;		
+}
+.linkc2 {
+	width: 30px;	
+	text-align: right;
+	padding-right: 5px;	
+}
+.linkc3 {	
+	width: 150px;
+	padding-left: 25px;			
+}
+.linkc4 {
+	width: 75px;	
+	padding-left: 10px;	
+}
+.linkc5 {	
+		
+}
+.linkc6 {
+	width: 150px;
+	padding-left: 10px;	
+}
+.linkc7 {
+	width: 50px;
+	padding-left: 10px;		
+}
+.linkc8 {
+	width: 50px;
+	padding-left: 10px;	
+}
+.linkc9 {
+	width: 175px;
+	padding-left: 10px;
+}
+.linkc10 {
+	width: 15%;
+}
+
+/* s:link */
+.slink {
+	background-image: url('/mynet/img/background-button.png');
+	border:1px solid #BED6F8;
+	color:#000000;
+	font-weight:bold;
+	padding:1px 4px;
+	text-decoration:  none;	
+}
+
+.slink:link, .slink:hover, .slink:active, .slink:visited{	
+	color:#000000;
+	font-weight:bold;	
+	text-decoration:  none;	
+}
+
+/*Edit template*/
+.description {
+	
 }

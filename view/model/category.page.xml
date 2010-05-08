@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
+      no-conversation-view-id="/model/categoryList.xhtml">
+   
+   <begin-conversation join="true"/>
+   
+   <navigation from-action="#{categoryHome.persist}">
+       <end-conversation/>
+       <redirect view-id="/model/category.xhtml"/>
+   </navigation>
+   
+   <navigation from-action="#{categoryHome.update}">
+       <end-conversation/>
+       <redirect view-id="/model/category.xhtml"/>
+   </navigation>
+   
+   <navigation from-action="#{categoryHome.remove}">
+       <end-conversation/>
+       <redirect view-id="/model/categoryList.xhtml"/>
+   </navigation>
+   
+</page>

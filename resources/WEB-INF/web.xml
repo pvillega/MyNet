@@ -111,9 +111,9 @@
       <persistence-unit-ref-name>mynet/pu</persistence-unit-ref-name>
       <persistence-unit-name>../mynet.jar#mynet</persistence-unit-name>
       <!-- The relative reference doesn't work on GlassFish. Instead, set the <persistence-unit-name> to "mynet",
-           package persistence.xml in the WAR, and add a <jar-file> element in persistence.xml with value "../../mynet.jar".
-      <persistence-unit-name>mynet</persistence-unit-name>
-      -->
+           package persistence.xml in the WAR, and add a <jar-file> element in persistence.xml with value "../../mynet.jar". 
+      <persistence-unit-name>mynet</persistence-unit-name -->
+      
    </persistence-unit-ref>
 
 </web-app>

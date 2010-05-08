@@ -1,0 +1,178 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+   <h:form id="linkSearch" styleClass="edit">
+    
+        <rich:simpleTogglePanel label="Link search parameters" switchType="ajax">
+        
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="name" value="#{linkList.name}"/>
+            </s:decorate>
+            
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">URL</ui:define>
+                <h:inputText id="url" value="#{linkList.url}"/>
+            </s:decorate>
+            
+            <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Description</ui:define>
+                <h:inputText id="description" value="#{linkList.description}"/>
+            </s:decorate>
+            
+        </rich:simpleTogglePanel>
+        
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" />
+            <h:commandButton id="cleanSearch" value="Clean" action="#{linkList.cleanSearch()}" />
+        </div>
+        
+    <rich:panel>
+        <f:facet name="header">Link List</f:facet>
+		make only this (links table) as component to list the content? allows for easy go back, etc
+		and we can set create only on mylinks, and the different browses as desired (layouts, etc)
+		on name, if owner -> edit, else -> view (display)
+        <div class="results">
+
+            <h:outputText value="No link exists"
+                       rendered="#{empty linkList.resultList}"/>
+                       
+            <h:dataTable id="linkList" var="link"
+                   value="#{linkList.resultList}"
+                   rendered="#{not empty linkList.resultList}"
+                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10">
+                                      
+                <h:column>
+                    <f:facet name="header"> </f:facet>                    
+                    <h:selectBooleanCheckbox value="#{link.selected}" />                    
+                </h:column>   
+                   
+                <h:column>
+                    <f:facet name="header">
+                       <ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="ID"/>
+        			        <ui:param name="propertyPath" value="link.id asc"/>
+		                </ui:include>
+                    </f:facet>
+                    #{link.id}
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                    	<ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Name"/>
+        			        <ui:param name="propertyPath" value="link.name asc"/>
+		                </ui:include>
+                    </f:facet>
+                    <s:link id="link"
+                         value="#{link.name}"
+                   propagation="none"
+                         view="/model/link.xhtml">
+                        <f:param name="linkId"
+                                value="#{link.id}"/>
+                        <f:param name="backButton" value="#{backButton}"/>
+                    </s:link>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                       <ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Category"/>
+        			        <ui:param name="propertyPath" value="link.category.name asc"/>
+		                </ui:include>
+                    </f:facet>
+                    #{link.category.name}
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">URL</f:facet>
+                    <a href="#{link.url}">#{link.url}</a>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Description</f:facet>                    
+                    <h:outputText value="#{link.shortDescription()}" escape="false" />
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                    	<ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Date"/>
+        			        <ui:param name="propertyPath" value="link.date asc"/>
+		                </ui:include>
+                    </f:facet>
+                    <h:outputText value="#{link.date}">
+  						<s:convertDateTime type="both" pattern="dd-MM-yyyy" />
+					</h:outputText>                  
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                    	<ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Private?"/>
+        			        <ui:param name="propertyPath" value="link.hidden asc"/>
+		                </ui:include>
+                    </f:facet>
+                    #{link.hidden?'YES':'NO'}                    
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Tags</f:facet>
+                    <h:outputText value="#{link.formattedTags()}" />
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header"> </f:facet>                    
+                    <h:commandButton action="#{linkListTools.remove(link)}" value="Delete" />                    
+                </h:column>
+                
+            </h:dataTable>
+
+        </div>
+	</rich:panel>
+        
+        <div class="actionButtons">
+	    	<s:link id="first" value="#{messages.left}#{messages.left} First Page" rendered="#{linkList.previousExists}" styleClass="slink" >
+    		    <f:param name="firstResult" value="0"/>
+        	</s:link>
+        	#{' '}
+    		<s:link id="previous" value="#{messages.left} Previous" rendered="#{linkList.previousExists}" styleClass="slink" >
+	    		<f:param name="firstResult" value="#{linkList.previousFirstResult}"/>
+	    	</s:link>
+	    	#{' '}
+	    	<s:link id="next" value="Next #{messages.right}" rendered="#{linkList.nextExists}" styleClass="slink">
+	    		<f:param name="firstResult" value="#{linkList.nextFirstResult}"/>
+	    	</s:link>
+	    	#{' '}
+	    	<s:link id="last" value="Last Page #{messages.right}#{messages.right}" rendered="#{linkList.nextExists}" styleClass="slink">
+	    		<f:param name="firstResult" value="#{linkList.lastFirstResult}"/>
+	    	</s:link>
+	    	#{' '}
+	        <s:button id="create"
+	               value="Create link"
+	               propagation="end"
+	                view="/model/link.xhtml" />
+	        <h:commandButton action="#{linkListTools.removeSelected()}" value="Delete selected" />
+    	</div>
+
+    
+
+ </h:form>
+ 
+ </ui:define>   
+
+</ui:composition>
