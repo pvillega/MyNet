@@ -1,0 +1,88 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+//TODO: 
+    <h:form id="userForm">
+
+        <rich:panel>
+            <f:facet name="header">#{userHome.managed ? 'Edit' : 'Add'} user</f:facet>
+
+            <s:decorate id="nameField" template="../layout/edit.xhtml">
+                <ui:define name="label">User Name</ui:define>
+                <ui:define name="description">is your login name</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{userHome.instance.username}">
+                	<a:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>             
+            </s:decorate>
+            
+            //TODO: add change password
+            
+            <s:decorate id="emailField" template="../layout/edit.xhtml">
+                <ui:define name="label">Email</ui:define>
+                <ui:define name="description">is used for communications</ui:define>
+                <h:inputText id="email" required="true"
+                             value="#{userHome.instance.email}">
+                	<a:support event="onblur" reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="descriptionField" template="../layout/edit.xhtml">
+                <ui:define name="label">Profile</ui:define>
+                <ui:define name="description">Tell us something about you!</ui:define>
+                <rich:editor id="descriptionEditor" required="false"                	
+            		value="#{userHome.instance.description}" >
+            	</rich:editor>
+            </s:decorate>
+                        
+            <s:decorate id="rolesField" template="../layout/edit.xhtml" rendered="#{identity.hasRole('admin')}">
+                <ui:define name="label">Roles</ui:define>
+                <ui:define name="description">are the roles of the user</ui:define>
+                <h:selectManyListbox value="#{userHome.instance.roles}" required="true">
+					<s:selectItems value="#{roleList.resultList}" var="role" label="#{role.name}" itemValue="#{role}"/>					
+					<s:convertEntity />
+					<a:support event="onblur" reRender="rolesField" bypassUpdates="true" ajaxSingle="true"/>
+				</h:selectManyListbox>
+            </s:decorate>          
+
+            <div style="clear:both">
+            	<span class="required">*</span> 
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{userHome.persist}"
+                       rendered="#{!userHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{userHome.update}"
+                       rendered="#{userHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{userHome.remove}"
+                      immediate="true"
+                       rendered="#{userHome.managed}"/>
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Back"
+                             view="/user/userList.xhtml"/>
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

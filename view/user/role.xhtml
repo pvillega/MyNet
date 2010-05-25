@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="roleForm">
+
+        <rich:panel>
+            <f:facet name="header">#{roleHome.managed ? 'Edit' : 'Add'} role</f:facet>
+
+            <s:decorate id="nameField" template="../layout/edit.xhtml">
+                <ui:define name="label">Name</ui:define>
+                <h:inputText id="name" required="true"
+                             value="#{roleHome.instance.name}">
+                	<a:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="numUsersField" template="../layout/edit.xhtml">
+                <ui:define name="label"># Users</ui:define>
+                <ui:define name="description">users have this role</ui:define>
+                <h:outputText id="numberUsers" required="false"
+                             value="#{roleHome.instance.numUsers}" />
+            </s:decorate>
+
+            <div style="clear:both">
+            	<span class="required">*</span> 
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{roleHome.persist}"
+                       rendered="#{!roleHome.managed}"/>
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{roleHome.update}"
+                       rendered="#{roleHome.managed}"/>
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{roleHome.remove}"
+                      immediate="true"
+                       rendered="#{roleHome.managed}"/>
+            <s:button propagation="end"
+                               id="cancel"
+                            value="Back"
+                             view="/user/roleList.xhtml"/>
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

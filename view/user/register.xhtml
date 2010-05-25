@@ -1,0 +1,81 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j"
+	template="../layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<div id="banner">
+			<h1>Join the MyNet community!</h1>
+			<p>Already a member?#{' '}<s:link id="signin" value="Click Here to Sign In" view="/login.xhtml"/></p>
+		</div>
+
+		<h:messages globalOnly="true" styleClass="message" errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"/>
+	
+		<h:form id="registerActionForm" styleClass="edit">
+			<rich:panel>
+			
+				<f:facet name="header">MyNet Member Registration</f:facet>
+				
+				<s:decorate id="nameField" template="../layout/edit.xhtml">
+	                <ui:define name="label">User Name</ui:define>
+	                <ui:define name="description">is your login name</ui:define>
+	                <h:inputText id="name" required="true"
+	                             value="#{newuser.username}" />
+	            </s:decorate>
+	            
+	            <s:decorate id="passwordField" template="../layout/edit.xhtml">
+					<ui:define name="label">Password</ui:define>
+					<h:inputSecret id="password" value="#{passwordBean.password}" size="20" required="true" redisplay="true" />
+				</s:decorate>
+		
+				<s:decorate id="confirmField" template="../layout/edit.xhtml">
+					<ui:define name="label">Confirm password</ui:define>
+					<h:inputSecret id="confirmField" value="#{passwordBean.confirm}" size="20" required="true" redisplay="true" />										
+				</s:decorate>
+	            
+	            <s:decorate id="emailField" template="../layout/edit.xhtml">
+	                <ui:define name="label">Email</ui:define>
+	                <ui:define name="description">is used for communications</ui:define>
+	                <h:inputText id="email" required="true"
+	                             value="#{newuser.email}" />
+	            </s:decorate>
+	            
+	            <s:decorate id="descriptionField" template="../layout/edit.xhtml">
+	                <ui:define name="label">Profile</ui:define>
+	                <ui:define name="description">Tell us something about you!</ui:define>
+	                <rich:editor id="descriptionEditor" required="false"                	
+	            		value="#{newuser.description}" >
+	            	</rich:editor>
+	            </s:decorate>
+				
+				<s:decorate id="verifyCaptchaField" template="../layout/edit.xhtml">
+					<ui:define name="label">Security check</ui:define>
+					<h:graphicImage id="captchaChallenge" value="/seam/resource/captcha" styleClass="captchaChallenge"/>
+					<h:inputText id="verifyCaptcha" value="#{captcha.response}" required="true" size="3"/>
+				</s:decorate>
+
+				<div style="clear:both">
+					<span class="required">*</span> required fields
+				</div>
+		
+			</rich:panel>
+
+			<div class="actionButtons">
+				<h:commandButton id="cancel" value="Cancel" action="cancel" immediate="true"/>
+				<h:commandButton id="register" value="Register" action="#{registerAction.register}">
+					<s:defaultAction/>
+				</h:commandButton>
+			</div>
+		
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
