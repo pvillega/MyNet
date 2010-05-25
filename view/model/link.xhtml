@@ -25,6 +25,12 @@
 					<a:support event="onblur" reRender="categoryField" bypassUpdates="true" ajaxSingle="true"/>
 				</h:selectOneMenu>                
             </s:decorate>
+            
+            <s:decorate id="creatorField" template="../layout/edit.xhtml" rendered="#{linkHome.instance.creator ne null}">
+                <ui:define name="label">Creator</ui:define>
+                <ui:define name="description">is the user who saved this link</ui:define>
+                <h:outputText value="#{linkHome.instance.creator.username}" />                
+            </s:decorate>            
 
             <s:decorate id="nameField" template="../layout/edit.xhtml">
                 <ui:define name="label">Name</ui:define>

@@ -50,6 +50,7 @@ public class Link implements Serializable {
 	private boolean hidden;
 	private String url;
 	private List<Tag> tags = new ArrayList<Tag>();
+	private User creator;
 	private String taglist;
 	private Category category;
 	private boolean validated;
@@ -287,5 +288,15 @@ public class Link implements Serializable {
 			t.removeLink(this);
 		}
 	}
+
+	@ManyToOne
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
 		
+	
 }

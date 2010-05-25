@@ -37,25 +37,6 @@ public class TagHome extends EntityHome<Tag>
         super.create();
     }
             
-    @Override
-    public String persist() {
-    	if(!exists()) {
-    		return super.persist();
-    	} else {    		
-			getStatusMessages().add(Severity.ERROR, "This Tag name already exists");
-			return "";
-		}    	
-    }
-        
-    private boolean exists(){
-    	EntityManager em = getEntityManager();
-		Query queryTagByName = em.createNamedQuery("findTagByName");
-		queryTagByName.setParameter("name", getInstance().getName());	
-		Collection tags = queryTagByName.getResultList();
-		
-		return tags.size() > 0;
-    }
-    
 	@Override
 	public String remove() {
 		getInstance().remove();

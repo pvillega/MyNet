@@ -22,6 +22,7 @@ import org.jboss.seam.log.Log;
 
 import com.perevillega.mynet.model.Category;
 import com.perevillega.mynet.model.Link;
+import com.perevillega.mynet.model.Role;
 import com.perevillega.mynet.model.Tag;
 
 
@@ -43,6 +44,7 @@ public class CronProcessor {
     	calculateTagsLinks(entityManager);
     	calculateCategoryLinksandChildren(entityManager);
     	validateLinks(entityManager);
+    	calculateRoleUsers(entityManager);
     	
     	entityManager.flush();
     	return null;
@@ -93,5 +95,20 @@ public class CronProcessor {
 				link.validate();
 			}
 		}		
+    }
+    
+    private void calculateRoleUsers(EntityManager em){
+    	log.info("Roles - calculating users number for each role");
+		
+		Query queryRoles = em.createNamedQuery("findAllRoles");						
+		Collection roles = queryRoles.getResultList();
+		
+		if (!roles.isEmpty()) {
+			Iterator it = roles.iterator();
+			while(it.hasNext()) {
+				Role role = (Role) it.next();
+				role.setNumUsers(role.getUsers().size());
+			}
+		}
     }
 }

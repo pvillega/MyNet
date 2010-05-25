@@ -1,14 +1,22 @@
 package com.perevillega.mynet.action;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Transactional;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
 
-@Stateless
+import com.perevillega.mynet.action.passwordsupport.PasswordManager;
+import com.perevillega.mynet.model.Role;
+import com.perevillega.mynet.model.User;
+
 @Name("authenticator")
 public class AuthenticatorBean implements Authenticator
 {
@@ -16,19 +24,42 @@ public class AuthenticatorBean implements Authenticator
 
     @In Identity identity;
     @In Credentials credentials;
+    @In private EntityManager entityManager;
+    @In(create=true) private PasswordManager passwordManager;
+    @Out(required = false) private User currentUser;
 
+    @Transactional
     public boolean authenticate()
     {
         log.info("authenticating {0}", credentials.getUsername());
-        //write your authentication logic here,
-        //return true if the authentication was
-        //successful, false otherwise
-        if ("admin".equals(credentials.getUsername()))
-        {
-            identity.addRole("admin");
-            return true;
+        
+        try{ 
+	        User user = (User) entityManager.createQuery(
+	        "select u from User u where u.username = :username")
+	        .setParameter("username", identity.getUsername() )
+	        .getSingleResult();
+	        
+	        if (!validatePassword(identity.getPassword(), user)) {
+				return false;
+			}
+	        
+	        currentUser = user;		
+	        
+	        identity.addRole("user");
+			if (user.getRoles() != null) {
+				for (Role role : user.getRoles()) {					
+					identity.addRole(role.getName());
+				}
+			}
+			return true;
+
+        }catch(NoResultException e) {
+        	return false;
         }
-        return false;
     }
+    
+    public boolean validatePassword(String password, User u) {
+		return passwordManager.hash(password).equals(u.getPasswordHash());
+	}
 
 }

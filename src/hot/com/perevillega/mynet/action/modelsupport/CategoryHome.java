@@ -36,23 +36,4 @@ public class CategoryHome extends EntityHome<Category>
         super.create();
     }
     
-    @Override
-    public String persist() {
-    	if(!exists()) {
-    		return super.persist();
-    	} else {    		
-			getStatusMessages().add(Severity.ERROR, "This Category name already exists");
-			return "";
-		}    	
-    }
-    
-    private boolean exists(){
-    	EntityManager em = getEntityManager();
-		Query queryCategoryByName = em.createNamedQuery("findCategoryByName");
-		queryCategoryByName.setParameter("name", getInstance().getName());
-		Collection categories = queryCategoryByName.getResultList();
-		
-		return categories.size() > 0;
-    }    
-
 }

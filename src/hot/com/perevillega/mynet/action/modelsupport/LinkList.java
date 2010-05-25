@@ -19,13 +19,15 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	private static final String[] RESTRICTIONS = {		
 		"lower(link.name) like concat('%',lower(#{linkList.name}),'%')",
 		"lower(link.url) like concat('%',lower(#{linkList.url}),'%')",
+		"lower(link.creator.username) like concat('%',lower(#{linkList.creator}),'%')",
 		"lower(link.description) like concat('%',lower(#{linkList.description}),'%')",
 		"link.category = #{linkList.category}",
 		};
 
 	
 	private String name;	
-	private String url;	
+	private String url;
+	private String creator;
 	private String description;
 	private Category category;
 	
@@ -76,6 +78,7 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	public void cleanSearch() {
 		this.name = null;
 		this.url = null;
+		this.creator = null;
 		this.description = null;
 		this.category = null;
 	}
@@ -102,6 +105,14 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 
 	public void setCreate(boolean create) {
 		this.create = create;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 	
 }

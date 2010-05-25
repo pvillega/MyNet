@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.web.RequestParameter;
@@ -18,11 +19,14 @@ import org.jboss.seam.international.StatusMessage.Severity;
 
 import com.perevillega.mynet.model.Link;
 import com.perevillega.mynet.model.Tag;
+import com.perevillega.mynet.model.User;
 
 @Name("linkHome")
 public class LinkHome extends EntityHome<Link> {
 	@RequestParameter
 	Long linkId;
+	
+	@In User currentUser;
 
 	@Override
 	public Object getId() {
@@ -54,6 +58,7 @@ public class LinkHome extends EntityHome<Link> {
 
 	@Override
 	public String persist() {
+		getInstance().setCreator(currentUser);
 		addTags();
 		return super.persist();
 	}

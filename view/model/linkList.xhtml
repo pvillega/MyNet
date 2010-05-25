@@ -20,6 +20,11 @@
             </s:decorate>
             
             <s:decorate template="../layout/display.xhtml">
+                <ui:define name="label">Creator</ui:define>
+                <h:inputText id="name" value="#{linkList.creator}"/>
+            </s:decorate>
+            
+            <s:decorate template="../layout/display.xhtml">
                 <ui:define name="label">URL</ui:define>
                 <h:inputText id="url" value="#{linkList.url}"/>
             </s:decorate>
@@ -56,7 +61,7 @@
                    value="#{linkList.resultList}"
                    rendered="#{not empty linkList.resultList}"
                    rowClasses="row1,row2" cellspacing="0"                   
-                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10,linkc11">
+                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10,linkc11,linkc12">
                                       
                 <h:column>
                     <f:facet name="header"> </f:facet>                    
@@ -90,6 +95,17 @@
                                 value="#{link.id}"/>
                         <f:param name="backButton" value="#{backButton}"/>
                     </s:link>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                       <ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Creator"/>
+        			        <ui:param name="propertyPath" value="link.creator.username asc"/>
+		                </ui:include>
+                    </f:facet>
+                    #{link.creator.username}
                 </h:column>
                 
                 <h:column>

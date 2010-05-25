@@ -1,10 +1,12 @@
 package com.perevillega.mynet.model;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,8 +16,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
@@ -30,6 +34,9 @@ import org.hibernate.validator.NotNull;
 		    query="SELECT OBJECT(category) FROM Category category WHERE category.name = :name"
 		    	),
 	})
+@Table(uniqueConstraints = {
+		@UniqueConstraint(columnNames = "name"),
+})
 public class Category implements Serializable
 {
     private Long id;
@@ -105,6 +112,7 @@ public class Category implements Serializable
         this.version = version;
     }
 
+    @Column(name = "name", nullable = false)
     @Length(max = 40)    
     public String getName() {
         return name;
