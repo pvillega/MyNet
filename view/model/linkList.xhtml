@@ -172,6 +172,19 @@
                 </h:column>
                 
                 <h:column>
+                    <f:facet name="header">
+                    	<ui:include src="../layout/sort.xhtml">
+                			<ui:param name="entityList" value="#{linkList}"/>
+                			<ui:param name="propertyLabel" value="Votes"/>
+        			        <ui:param name="propertyPath" value="link.valoration() desc"/>
+		                </ui:include>
+                    </f:facet>
+                    <h:outputText value="#{link.valoration()}" />                     
+                    <h:commandButton action="#{linkListTools.vote(link,1)}" value="Like!" rendered="#{identity.loggedIn}" />
+                    <h:commandButton action="#{linkListTools.vote(link,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />                 
+                </h:column>
+                
+                <h:column>
                     <f:facet name="header"> </f:facet>                    
                     <h:commandButton action="#{linkListTools.remove(link)}" value="Delete" />                    
                 </h:column>

@@ -47,6 +47,7 @@ public class User implements Serializable
 	private List<Link> ownlinks = new ArrayList<Link>(0);
 	private String description;
 	private boolean selected;
+	private List<Vote> votes = new ArrayList<Vote>(0);
 	
 
     @Override
@@ -185,5 +186,13 @@ public class User implements Serializable
 		this.ownlinks = ownlinks;
 	}
 
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	public List<Vote> getVotes() {		
+		return votes;
+	}
+
+	public void setVotes(List<Vote> votes) {
+		this.votes = votes;
+	}	
 	
 }

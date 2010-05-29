@@ -22,11 +22,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.AccessType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Pattern;
@@ -49,13 +53,15 @@ public class Link implements Serializable {
 	private String description;
 	private boolean hidden;
 	private String url;
-	private List<Tag> tags = new ArrayList<Tag>();
+	private List<Tag> tags = new ArrayList<Tag>(0);
 	private User creator;
 	private String taglist;
 	private Category category;
 	private boolean validated;
 	private Date dateValidation;
 	private boolean selected;
+	private List<Vote> votes = new ArrayList<Vote>(0);
+	private int valoration;
 	
 	
 	@Override
@@ -286,7 +292,7 @@ public class Link implements Serializable {
 	public void remove() {		
 		for (Tag t : tags) {
 			t.removeLink(this);
-		}
+		}		
 	}
 
 	@ManyToOne
@@ -297,6 +303,23 @@ public class Link implements Serializable {
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-		
+
+	@OneToMany(mappedBy="link", fetch=FetchType.LAZY)	
+	public List<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(List<Vote> votes) {
+		this.votes = votes;
+	}
+	
+	//we should calculate it with cron job, but then it would not be real time update!
+	public int valoration() {
+		int val = 0;
+		for(Vote vote: getVotes()) {
+			val += vote.getValue();
+		}		
+		return val;
+	}
 	
 }

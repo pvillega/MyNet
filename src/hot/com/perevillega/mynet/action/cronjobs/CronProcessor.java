@@ -41,7 +41,7 @@ public class CronProcessor {
     @Transactional
     public QuartzTriggerHandle runJobs(@Expiration Date when, @IntervalCron String interval) {
     	
-    	calculateTagsLinks(entityManager);
+    	calculateTagsLinks(entityManager);    
     	calculateCategoryLinksandChildren(entityManager);
     	validateLinks(entityManager);
     	calculateRoleUsers(entityManager);

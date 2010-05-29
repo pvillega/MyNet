@@ -26,7 +26,7 @@ public class LinkHome extends EntityHome<Link> {
 	@RequestParameter
 	Long linkId;
 	
-	@In User currentUser;
+	@In(required=false) User currentUser;
 
 	@Override
 	public Object getId() {
