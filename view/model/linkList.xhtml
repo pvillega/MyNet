@@ -92,8 +92,7 @@
                          propagation="nest"                                       		 
                          view="/model/link.xhtml">                         
                         <f:param name="linkId"
-                                value="#{link.id}"/>
-                        <f:param name="backButton" value="#{backButton}"/>
+                                value="#{link.id}"/>                        
                     </s:link>
                 </h:column>
                 
@@ -105,7 +104,13 @@
         			        <ui:param name="propertyPath" value="link.creator.username asc"/>
 		                </ui:include>
                     </f:facet>
-                    #{link.creator.username}
+                    <s:link id="ownerProfile"
+                         value="#{link.creator.username}"    
+                         propagation="nest"                                       		 
+                         view="/user/profile.xhtml">                         
+                        <f:param name="userId"
+                                value="#{link.creator.id}"/>                        
+                    </s:link>
                 </h:column>
                 
                 <h:column>
@@ -193,7 +198,7 @@
 
         </div>
 	</rich:panel>
-        
+        //tODO: condicions render de quadres select, botons remove (logged, owner of link)
         <div class="actionButtons">
 	    	<s:link id="first" value="#{messages.left}#{messages.left} First Page" rendered="#{linkList.previousExists}" styleClass="slink" >
     		    <f:param name="firstResult" value="0"/>
@@ -214,9 +219,9 @@
 	        <s:button id="create"
 	               value="Create link"	     
 	               propagation="nest"        
-	               rendered="#{linkList.create}"  
+	               rendered="#{linkList.create and identity.loggedIn}"	               
 	                view="/model/link.xhtml" />	                
-	        <h:commandButton action="#{linkListTools.removeSelected()}" value="Delete selected" />
+	        <h:commandButton action="#{linkListTools.removeSelected()}" value="Delete selected" rendered="#{linkList.create and identity.loggedIn}" />
     	</div>
 
     

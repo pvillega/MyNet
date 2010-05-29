@@ -1,0 +1,192 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a="http://richfaces.org/a4j"
+    template="../layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="userForm">
+
+        <rich:panel>
+            <f:facet name="header">Profile of #{userHome.instance.username}</f:facet>
+
+            <s:decorate id="nameField" template="../layout/edit.xhtml" rendered="#{currentUser.username eq userHome.instance.username}">
+                <ui:define name="label">User Name</ui:define>
+                <ui:define name="description">is your login name</ui:define>
+                <h:outputText id="name" value="#{userHome.instance.username}" />                	             
+            </s:decorate>
+            
+            <s:decorate id="publicNameField" template="../layout/edit.xhtml" rendered="#{currentUser.username ne userHome.instance.username}">
+                <ui:define name="label">User Name</ui:define>                
+                #{userHome.instance.username}                	             
+            </s:decorate>
+            
+            <s:decorate id="passwordField" template="../layout/edit.xhtml" rendered="#{currentUser.username eq userHome.instance.username}">
+				<ui:define name="label">New password</ui:define>
+				<h:inputSecret id="password" value="#{passwordBean.password}" size="20" redisplay="true"/>
+			</s:decorate>
+	
+			<s:decorate id="confirmField" template="../layout/edit.xhtml" rendered="#{currentUser.username eq userHome.instance.username}">
+				<ui:define name="label">Confirm password</ui:define>
+				<h:inputSecret id="confirmField" value="#{passwordBean.confirm}" size="20" redisplay="true"/>
+			</s:decorate>
+            
+            <s:decorate id="emailField" template="../layout/edit.xhtml" rendered="#{currentUser.username eq userHome.instance.username}">
+                <ui:define name="label">Email</ui:define>
+                <ui:define name="description">is used for communications</ui:define>
+                <h:inputText id="email" required="true"
+                             value="#{userHome.instance.email}">
+                	<a:support event="onblur" reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="descriptionField" template="../layout/edit.xhtml" rendered="#{currentUser.username eq userHome.instance.username}">
+                <ui:define name="label">Profile</ui:define>
+                <ui:define name="description">Tell us something about you!</ui:define>
+                <rich:editor id="descriptionEditor" required="false"                	
+            		value="#{userHome.instance.description}" >
+            	</rich:editor>
+            </s:decorate>
+            
+            <s:decorate id="publicDescriptionField" template="../layout/edit.xhtml" rendered="#{currentUser.username ne userHome.instance.username}">
+                <ui:define name="label">Profile</ui:define>                
+                <h:outputText value="#{userHome.instance.description}" escape="false" />                            	
+            </s:decorate>          
+
+            <div style="clear:both">
+            	<span class="required">*</span> 
+                required fields
+            </div>
+
+        </rich:panel>
+        
+        
+        <rich:panel>
+        	<f:facet name="header">Links published by user</f:facet>
+        		
+        	<div class="results">
+
+            <h:outputText value="No links exist"
+                       rendered="#{empty userHome.instance.listPublicLinks()}"/>
+                       
+	          <h:dataTable id="linkList" var="link"
+	                   value="#{userHome.instance.listPublicLinks()}"
+	                   rendered="#{not empty userHome.instance.listPublicLinks()}"
+	                   rowClasses="row1,row2" cellspacing="0"                   
+	                   columnClasses="linkc3,linkc5,linkc6,linkc7,linkc9,linkc10,linkc11">                   
+	                
+	                <h:column>
+	                    <f:facet name="header">
+	                    	<ui:include src="../layout/sort.xhtml">
+	                			<ui:param name="entityList" value="#{linkList}"/>
+	                			<ui:param name="propertyLabel" value="Name"/>
+	        			        <ui:param name="propertyPath" value="link.name asc"/>
+			                </ui:include>
+	                    </f:facet>
+	                    <s:link id="link"
+	                         value="#{link.name}"    
+	                         propagation="nest"                                       		 
+	                         view="/model/link.xhtml">                         
+	                        <f:param name="linkId"
+	                                value="#{link.id}"/>                        
+	                    </s:link>
+	                </h:column>
+	                
+	                
+	                <h:column>
+	                    <f:facet name="header">
+	                       <ui:include src="../layout/sort.xhtml">
+	                			<ui:param name="entityList" value="#{linkList}"/>
+	                			<ui:param name="propertyLabel" value="Category"/>
+	        			        <ui:param name="propertyPath" value="link.category.name asc"/>
+			                </ui:include>
+	                    </f:facet>
+	                    #{link.category.name}
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">URL</f:facet>
+	                    <a href="#{link.url}">#{link.url}</a>
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">Description</f:facet>                    
+	                    <h:outputText value="#{link.shortDescription()}" escape="false" />
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">
+	                    	<ui:include src="../layout/sort.xhtml">
+	                			<ui:param name="entityList" value="#{linkList}"/>
+	                			<ui:param name="propertyLabel" value="Date Added"/>
+	        			        <ui:param name="propertyPath" value="link.date asc"/>
+			                </ui:include>
+	                    </f:facet>
+	                    <h:outputText value="#{link.date}">
+	  						<s:convertDateTime type="both" pattern="dd-MM-yyyy" />
+						</h:outputText>                  
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">
+	                    	<ui:include src="../layout/sort.xhtml">
+	                			<ui:param name="entityList" value="#{linkList}"/>
+	                			<ui:param name="propertyLabel" value="Validated?"/>
+	        			        <ui:param name="propertyPath" value="link.dateValidation asc"/>
+			                </ui:include>
+	                    </f:facet>
+	                    <h:outputText value="#{link.dateValidation}" rendered="#{link.validated}">
+	  						<s:convertDateTime type="both" pattern="dd-MM-yyyy" />
+						</h:outputText>                  
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">Tags</f:facet>
+	                    <h:outputText value="#{link.formattedTags()}" />
+	                </h:column>
+	                
+	                <h:column>
+	                    <f:facet name="header">
+	                    	<ui:include src="../layout/sort.xhtml">
+	                			<ui:param name="entityList" value="#{linkList}"/>
+	                			<ui:param name="propertyLabel" value="Votes"/>
+	        			        <ui:param name="propertyPath" value="link.valoration() desc"/>
+			                </ui:include>
+	                    </f:facet>
+	                    <h:outputText value="#{link.valoration()}" />                     
+	                    <h:commandButton action="#{linkListTools.vote(link,1)}" value="Like!" rendered="#{identity.loggedIn}" />
+	                    <h:commandButton action="#{linkListTools.vote(link,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />                 
+	                </h:column>
+	                
+	            </h:dataTable>
+        	</div>
+		</rich:panel>
+		
+        <div class="actionButtons">                    
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{userHome.update}"
+                       rendered="#{userHome.managed}"/>            
+            <s:button propagation="end"
+                      id="cancel"
+                      value="Back"
+                      view="/home.xhtml"
+                      rendered="#{!conversation.nested}" />
+            <s:button id="cancel2"
+                      value="Back" 
+                      propagation="end"                                                
+                      view="#{linkList.from}" 
+                      rendered="#{conversation.nested}"/>
+        </div>
+
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

@@ -185,6 +185,16 @@ public class User implements Serializable
 	public void setOwnlinks(List<Link> ownlinks) {
 		this.ownlinks = ownlinks;
 	}
+	
+	public List<Link> listPublicLinks() {
+		List<Link> publiclinks = new ArrayList<Link>();
+		for(Link l: ownlinks){
+			if(!l.isHidden()) {
+				publiclinks.add(l);
+			}
+		}
+		return publiclinks;
+	}
 
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	public List<Vote> getVotes() {		
