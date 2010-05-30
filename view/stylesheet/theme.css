@@ -239,6 +239,10 @@ table.radio input[type=radio] {
 	text-align: center;	
 }
 .tagc5 {
+	width: 250px;	
+	text-align: center;
+}
+.tagc6 {
 }
 
 /*Category list*/
@@ -293,22 +297,26 @@ table.radio input[type=radio] {
 	padding-left: 10px;	
 }
 .linkc8 {
-	width: 80px;
-	padding-left: 10px;		
-}
-.linkc9 {
 	width: 60px;
 	padding-left: 10px;	
 }
-.linkc10 {
+.linkc9 {
 	width: 80px;
 	padding-left: 10px;	
 }
-.linkc11 {
+.linkc10 {
 	width: 175px;
 	padding-left: 10px;
 }
+.linkc11 {
+	width: 120px;	
+	text-align: center;		
+}
 .linkc12 {
+	width: 60px;		
+	text-align: center;		
+}
+.linkc13 {
 	
 }
 

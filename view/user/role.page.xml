@@ -2,7 +2,10 @@
 <page xmlns="http://jboss.com/products/seam/pages"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
-      no-conversation-view-id="/user/roleList.xhtml">
+      no-conversation-view-id="/user/roleList.xhtml"
+      login-required="true" >
+      
+   <restrict>#{s:hasRole('admin')}</restrict>
    
    <navigation from-action="#{roleHome.persist}">
        <redirect view-id="/user/role.xhtml"/>

@@ -59,13 +59,30 @@
                 <h:outputText value="#{userHome.instance.description}" escape="false" />                            	
             </s:decorate>          
 
+
             <div style="clear:both">
-            	<span class="required">*</span> 
-                required fields
+            	<h:outputText value="*" styleClass="required" rendered="#{identity.loggedIn and currentUser.username eq userHome.instance.username}" />
+	            <h:outputText value="required fields" rendered="#{identity.loggedIn and currentUser.username eq userHome.instance.username}" />            	
             </div>
 
         </rich:panel>
         
+        <div class="actionButtons">                    
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{userHome.update}"
+                       rendered="#{identity.loggedIn and userHome.managed and currentUser.username eq userHome.instance.username}"/>            
+            <s:button propagation="end"
+                      id="cancel"
+                      value="Back"
+                      view="/home.xhtml"
+                      rendered="#{!conversation.nested}" />
+            <s:button id="cancel2"
+                      value="Back" 
+                      propagation="end"                                                
+                      view="#{linkList.from}" 
+                      rendered="#{conversation.nested}"/>
+        </div>
         
         <rich:panel>
         	<f:facet name="header">Links published by user</f:facet>
@@ -168,22 +185,7 @@
         	</div>
 		</rich:panel>
 		
-        <div class="actionButtons">                    
-            <h:commandButton id="update"
-                          value="Save"
-                         action="#{userHome.update}"
-                       rendered="#{userHome.managed}"/>            
-            <s:button propagation="end"
-                      id="cancel"
-                      value="Back"
-                      view="/home.xhtml"
-                      rendered="#{!conversation.nested}" />
-            <s:button id="cancel2"
-                      value="Back" 
-                      propagation="end"                                                
-                      view="#{linkList.from}" 
-                      rendered="#{conversation.nested}"/>
-        </div>
+        
 
     </h:form>
 

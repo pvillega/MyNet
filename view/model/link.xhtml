@@ -16,7 +16,7 @@
         <rich:panel>
             <f:facet name="header">#{tagHome.managed ? 'Edit' : 'Add'} Link</f:facet>
             
-            <s:decorate id="categoryField" template="../layout/edit.xhtml">
+            <s:decorate id="categoryField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label">Category</ui:define>
                 <ui:define name="description">is used to classify the link</ui:define>
                 <h:selectOneMenu value="#{linkHome.instance.category}" required="true">
@@ -26,13 +26,18 @@
 				</h:selectOneMenu>                
             </s:decorate>
             
+            <s:decorate id="anonCategoryField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
+                <ui:define name="label">Category</ui:define>                
+                <h:outputText value="#{linkHome.instance.category.name}" />                                
+            </s:decorate>
+            
             <s:decorate id="creatorField" template="../layout/edit.xhtml" rendered="#{linkHome.instance.creator ne null}">
                 <ui:define name="label">Creator</ui:define>
                 <ui:define name="description">is the user who saved this link</ui:define>
                 <h:outputText value="#{linkHome.instance.creator.username}" />                
-            </s:decorate>            
+            </s:decorate>
 
-            <s:decorate id="nameField" template="../layout/edit.xhtml">
+            <s:decorate id="nameField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label">Name</ui:define>
                 <ui:define name="description">is a short identifier for the link</ui:define>
                 <h:inputText id="name" required="true"
@@ -40,8 +45,13 @@
                 	<a:support event="onblur" reRender="nameField" bypassUpdates="true" ajaxSingle="true"/>
                 </h:inputText>
             </s:decorate>
+
+            <s:decorate id="anonNameField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
+                <ui:define name="label">Name</ui:define>
+                <h:outputText value="#{linkHome.instance.name}" />                
+            </s:decorate>
             
-            <s:decorate id="urlField" template="../layout/edit.xhtml">
+            <s:decorate id="urlField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label">URL</ui:define>
                 <ui:define name="description">is the URL you want to store</ui:define>
                 <h:inputText id="url" required="true"
@@ -50,34 +60,56 @@
                 </h:inputText>             
             </s:decorate>
             
-            <s:decorate id="descriptionField" template="../layout/edit.xhtml">
+            <s:decorate id="anonUrlField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
+                <ui:define name="label">URL</ui:define>
+                <h:outputText value="#{linkHome.instance.url}" />                
+            </s:decorate>
+            
+            <s:decorate id="descriptionField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label">Description</ui:define>
                 <rich:editor id="descriptionEditor" required="false"                	
             		value="#{linkHome.instance.description}" >
             	</rich:editor>
-            </s:decorate>                       
+            </s:decorate>
             
-            <s:decorate id="publicField" template="../layout/edit.xhtml">
+            <s:decorate id="anonDescriptionField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
+                <ui:define name="label">Description</ui:define>
+                <h:outputText value="#{linkHome.instance.description}" escape="false" />            	
+            </s:decorate>                                              
+            
+            <s:decorate id="publicField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label">Private</ui:define>
                 <ui:define name="description">Selected if you don't want to share your link</ui:define>
                 <h:selectBooleanCheckbox value="#{linkHome.instance.hidden}" required="false" />                
             </s:decorate>
             
-            <s:decorate id="tagsField" template="../layout/edit.xhtml">
+            <s:decorate id="tagsField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
             	<ui:define name="label">Tags</ui:define>
             	<ui:define name="description">is a list of comma separated words that identify the link</ui:define>
                 <h:inputText value="#{linkHome.instance.taglist}" />                							
             </s:decorate>
                       
-            <s:decorate id="tagListField" template="../layout/edit.xhtml">
+            <s:decorate id="tagListField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label"> </ui:define>
                 <ui:define name="description">are the current tags</ui:define>
 				<b><h:outputText value="#{linkHome.instance.formattedTags()}" /></b>
             </s:decorate>
-            //TODO: vote link here?
+            
+            <s:decorate id="anonTagListField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
+                <ui:define name="label">Tags</ui:define>                
+				<b><h:outputText value="#{linkHome.instance.formattedTags()}" /></b>
+            </s:decorate>
+            
+            <s:decorate id="pointsField" template="../layout/edit.xhtml">
+            	<ui:define name="label">Valoration</ui:define>
+            	<h:outputText value="#{linkHome.instance.valoration()}" />                     
+                <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn}" />
+                <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />
+            </s:decorate>            
+            
             <div style="clear:both">
-            	<span class="required">*</span> 
-                required fields
+            	<h:outputText value="*" styleClass="required" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}" />
+	            <h:outputText value="required fields" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}" />            	
             </div>
 
         </rich:panel>
@@ -90,12 +122,12 @@
             <h:commandButton id="update"
                           value="Save"
                          action="#{linkHome.update}"
-                       rendered="#{linkHome.managed}"/>
+                       rendered="#{linkHome.managed and identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}"/>
             <h:commandButton id="delete"
                       value="Delete"
                       action="#{linkHome.remove}"                      
                       immediate="true"
-                      rendered="#{linkHome.managed}">                      
+                      rendered="#{linkHome.managed and identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">                      
             </h:commandButton>            	
             <s:button id="cancel"
                       value="Back" 

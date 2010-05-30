@@ -25,7 +25,15 @@
                 </h:inputText>             
             </s:decorate>
             
-            //TODO: add change password
+            <s:decorate id="passwordField" template="../layout/edit.xhtml">
+				<ui:define name="label">New password</ui:define>
+				<h:inputSecret id="password" value="#{passwordBean.password}" size="20" redisplay="true"/>
+			</s:decorate>
+	
+			<s:decorate id="confirmField" template="../layout/edit.xhtml">
+				<ui:define name="label">Confirm password</ui:define>
+				<h:inputSecret id="confirmField" value="#{passwordBean.confirm}" size="20" redisplay="true"/>
+			</s:decorate>
             
             <s:decorate id="emailField" template="../layout/edit.xhtml">
                 <ui:define name="label">Email</ui:define>

@@ -1,0 +1,27 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<rich:panel>
+			<f:facet name="header">Administration options</f:facet>
+			<h:outputText value="Select the section to administer:" />
+			<ul>
+				<li><s:link id="linkHomeId" view="/allLinks.xhtml" value="Links" propagation="none" /></li>
+				<li><s:link id="categoryHomeId" view="/model/categoryList.xhtml" value="Categories" propagation="none"/></li>
+				<li><s:link id="tagHomeId" view="/model/tagList.xhtml" value="Tags" propagation="none"/></li>
+	        	<li><s:link id="userHomeId" view="/user/userList.xhtml" value="Users" propagation="none"/></li>
+	        	<li><s:link id="roleHomeId" view="/user/roleList.xhtml" value="Roles" propagation="none"/></li>
+	        </ul>
+		</rich:panel>
+
+	</ui:define>
+
+</ui:composition>

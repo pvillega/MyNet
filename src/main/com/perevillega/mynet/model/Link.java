@@ -268,8 +268,7 @@ public class Link implements Serializable {
 			this.setValidated(true);
 		}		
 	}
-	
-	//TODO: normalise URL's!
+		
 	
 	@Transient
 	public boolean isSelected() {

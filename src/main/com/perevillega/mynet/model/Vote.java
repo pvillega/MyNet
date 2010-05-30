@@ -49,6 +49,7 @@ public class Vote implements Serializable
         this.name = name;
     }
     
+    @ManyToOne
 	public Link getLink() {
 		return link;
 	}

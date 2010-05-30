@@ -44,6 +44,7 @@ public class Tag implements Serializable
     private List<Link> links = new ArrayList<Link>();
     private boolean selected;
     private int numLinks;
+    private String mergeTarget;
 
     @Override
 	public int hashCode() {
@@ -153,5 +154,14 @@ public class Tag implements Serializable
     		l.removeTag(this);
     	}		
 	}
+
+	@Transient
+	public String getMergeTarget() {
+		return mergeTarget;
+	}
+
+	public void setMergeTarget(String mergeTarget) {
+		this.mergeTarget = mergeTarget;
+	}	
 	
 }

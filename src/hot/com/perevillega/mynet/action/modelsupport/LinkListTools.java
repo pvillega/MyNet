@@ -67,7 +67,7 @@ public class LinkListTools {
     	if(link.valoration() < -5) {
     		link.setHidden(true);
     	}    	
-    	//TODO: update valoration when voting!!
+    	//TODO: update valoration on web page when voting!!
     	entityManager.merge(link);
     	entityManager.flush();    
     	
