@@ -11,6 +11,7 @@ import org.jboss.seam.annotations.Scope;
 import com.perevillega.mynet.action.queries.EnhancedSortEntityQuery;
 import com.perevillega.mynet.model.Link;
 import com.perevillega.mynet.model.Category;
+import com.perevillega.mynet.model.Tag;
 
 @Name("linkList")
 @Scope(ScopeType.CONVERSATION)
@@ -22,6 +23,7 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 		"lower(link.creator.username) like concat('%',lower(#{linkList.creator}),'%')",
 		"lower(link.description) like concat('%',lower(#{linkList.description}),'%')",
 		"link.category = #{linkList.category}",
+		"#{linkList.tag} member of link.tags",
 		};
 
 	
@@ -30,6 +32,7 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	private String creator;
 	private String description;
 	private Category category;
+	private Tag tag;
 	
 	private String title;
 	private String from;
@@ -114,5 +117,17 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
+
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
 	
+	public void filterBy(Tag tag) {
+		setTag(tag);
+		refresh();
+	}
 }

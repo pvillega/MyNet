@@ -37,12 +37,14 @@
 	        <s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none"/>        
 	        <s:link id="linkHomeId" view="/allLinks.xhtml" value="Public Links" propagation="none" />    	
 			<s:link id="privateLinkHomeId" view="/privateLinks.xhtml" value="Private Links" propagation="none" />	                
+			<s:link id="byTagId" view="/byTag.xhtml" value="By Tag" propagation="none" />
+			<s:link id="byCategoryId" view="/byCategory.xhtml" value="By Category" propagation="none" />
 	        <h:outputText value=" | " rendered="#{identity.loggedIn}" />
 	        <s:link id="myLinksId" view="/allLinks.xhtml" value="My Links" propagation="none" rendered="#{identity.loggedIn}" />
 	        <s:link id="adminPanel" view="/administer.xhtml" value="Administer" propagation="none" rendered="#{s:hasRole('admin')}"/>	        	        
 	     </rich:toolBarGroup>	     
 	     <rich:toolBarGroup location="right">
-	        Search here
+	        Search here - click on tag/category goes to page!!
 	     </rich:toolBarGroup>
 	  </rich:toolBar>
 	               
