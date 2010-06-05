@@ -97,12 +97,23 @@
             
             <s:decorate id="anonTagListField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
                 <ui:define name="label">Tags</ui:define>                
-				<b><h:outputText value="#{linkHome.instance.formattedTags()}" /></b>
+				<ui:repeat value="#{link.tags}" var="tag">
+               		<s:link 
+               			propagation="join"
+               			view="/byTag.xhtml" 
+               			value="#{tag.name} (#{tag.numLinks})" >
+               			<f:param name="tag"
+                              value="#{tag}"/>
+                           <s:convertEntity/>          
+                  	</s:link>	   
+                  	#{'  '}               
+          		</ui:repeat>           
             </s:decorate>
             
             <s:decorate id="pointsField" template="../layout/edit.xhtml">
             	<ui:define name="label">Valoration</ui:define>
-            	<h:outputText value="#{linkHome.instance.valoration()}" />                     
+            	<h:outputText value="#{linkHome.instance.valoration()}" />    
+            	#{'  '}                      
                 <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn}" />
                 <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />
             </s:decorate>            

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+      
+   <begin-conversation join="true"/>
+   <action execute="#{linkList.setEjbql('select link from Link link where link.hidden = false')}" />
+   <action execute="#{linkList.setTitle('Public links')}" />
+   <action execute="#{linkList.setFrom('/public.xhtml')}" />   
+   <action execute="#{linkList.setCreate(true)}" />
+   
+   <!--  stores the first result of the query in a page parameter to allow for pagination -->
+   <param name="firstResult" value="#{linkList.firstResult}" />
+   <!--  enables ordering of columns, remove to disable -->
+   <param name="sort" value="#{linkList.orderColumns}"/>
+   <param name="dir" value="#{linkList.orderDirection}"/>
+   <param name="prevSort" value="#{linkList.prevSanitizedOrderByParamsStr}"/>
+      
+</page>

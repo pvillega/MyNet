@@ -181,7 +181,8 @@
         			        <ui:param name="propertyPath" value="link.valoration() desc"/>
 		                </ui:include>
                     </f:facet>
-                    <h:outputText value="#{link.valoration()}" />                     
+                    <h:outputText value="#{link.valoration()}" />
+                    #{'  '}                          
                     <h:commandButton action="#{linkListTools.vote(link,1)}" value="Like!" rendered="#{identity.loggedIn}" />
                     <h:commandButton action="#{linkListTools.vote(link,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />                 
                 </h:column>
