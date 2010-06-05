@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -60,8 +61,9 @@ public class Link implements Serializable {
 	private boolean validated;
 	private Date dateValidation;
 	private boolean selected;
-	private List<Vote> votes = new ArrayList<Vote>(0);
 	private List<User> favorited = new ArrayList<User>(0);
+	private List<User> like = new ArrayList<User>(0);
+	private List<User> dislike = new ArrayList<User>(0);
 	private int valoration;
 	
 	
@@ -296,6 +298,12 @@ public class Link implements Serializable {
 		for(User u: favorited){
 			u.removeFavorite(this);
 		}
+		for(User u: like) {
+			u.removeLike(this);
+		}
+		for(User u: dislike) {
+			u.removeDislike(this);
+		}
 	}
 
 	@ManyToOne
@@ -306,25 +314,7 @@ public class Link implements Serializable {
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-
-	@OneToMany(mappedBy="link", fetch=FetchType.LAZY)	
-	public List<Vote> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(List<Vote> votes) {
-		this.votes = votes;
-	}
-	
-	//we should calculate it with cron job, but then it would not be real time update!
-	public int valoration() {
-		int val = 0;
-		for(Vote vote: getVotes()) {
-			val += vote.getValue();
-		}		
-		return val;
-	}
-	
+		
 	@ManyToMany(fetch=FetchType.LAZY)	
 	public List<User> getFavorited() {
 		return favorited;
@@ -345,5 +335,44 @@ public class Link implements Serializable {
 	public boolean linkFavorited(User user) {		
 		return this.favorited.contains(user);
 	}
+
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="Links_Liked")
+	public List<User> getLike() {
+		return like;
+	}
+
+	public void setLike(List<User> like) {
+		this.like = like;
+	}
 	
+	public void removeLike(User user){
+		this.like.remove(user);	
+	}
+	
+	public void addLike(User user){
+		this.like.add(user);
+	}
+
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="Links_Disliked")
+	public List<User> getDislike() {
+		return dislike;
+	}
+
+	public void setDislike(List<User> dislike) {
+		this.dislike = dislike;
+	}
+	
+	public void removeDislike(User user){
+		this.dislike.remove(user);	
+	}
+	
+	public void addDislike(User user){
+		this.dislike.add(user);
+	}
+	
+	public int valoration() {				
+		return like.size() - dislike.size();
+	}
 }

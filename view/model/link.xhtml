@@ -108,10 +108,13 @@
             
             <s:decorate id="pointsField" template="../layout/edit.xhtml">
             	<ui:define name="label">Valoration</ui:define>
-            	<h:outputText value="#{linkHome.instance.valoration()}" />    
+            	<b><h:outputText value="[#{linkHome.instance.valoration()}]" /></b>    
             	#{'  '}                      
-                <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn}" />
-                <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />
+                <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn and not linkHome.instance.like.contains(currentUser)}" />
+                <h:outputText value="Love It" rendered="#{identity.loggedIn and linkHome.instance.like.contains(currentUser)}" />
+                #{'  '}
+                <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn and not linkHome.instance.dislike.contains(currentUser)}" />
+                <h:outputText value="Hate It" rendered="#{identity.loggedIn and linkHome.instance.dislike.contains(currentUser)}" />
             </s:decorate>    
             
             <s:decorate id="favoritedField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn}" >

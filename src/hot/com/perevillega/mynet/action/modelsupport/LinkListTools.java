@@ -12,7 +12,6 @@ import org.jboss.seam.annotations.Transactional;
 
 import com.perevillega.mynet.model.Link;
 import com.perevillega.mynet.model.User;
-import com.perevillega.mynet.model.Vote;
 
 @Name("linkListTools")
 public class LinkListTools {
@@ -49,29 +48,21 @@ public class LinkListTools {
     	entityManager.flush();    	
     	linkList.refresh();    	    	
     }
-
     
-    public void vote(Link link, int value) { 
-    	//TODO: first remove existing vote?     	
-    	//add new vote
+    public void vote(Link link, int value) {
     	
-    	entityManager.merge(currentUser);
+    	if(value > 0){
+    		link.addLike(currentUser);
+    		link.removeDislike(currentUser);
+    	} else {
+    		link.removeLike(currentUser);
+    		link.addDislike(currentUser);    		
+    	}
     	
-    	Vote v = new Vote();
-    	v.setValue(value);
-    	v.setLink(link);
-    	v.setUser(currentUser);
-    	
-    	entityManager.persist(v);    	
-    	
-    	if(link.valoration() < -5) {
-    		link.setHidden(true);
-    	}    	
-    	//TODO: update valoration on web page when voting!!
-    	entityManager.merge(link);
+    	entityManager.merge(link);    	
     	entityManager.flush();    
     	
-    	linkList.refresh();
+    	linkList.refresh();    	
     }
     
     public void favorite(Link link) {

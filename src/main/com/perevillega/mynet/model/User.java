@@ -46,9 +46,10 @@ public class User implements Serializable
 	private List<Role> roles = new ArrayList<Role>(0);
 	private List<Link> ownlinks = new ArrayList<Link>(0);
 	private String description;
-	private boolean selected;
-	private List<Vote> votes = new ArrayList<Vote>(0);
+	private boolean selected;	
 	private List<Link> favorites = new ArrayList<Link>(0);
+	private List<Link> liked = new ArrayList<Link>(0);
+	private List<Link> disliked = new ArrayList<Link>(0);
 	
 
     @Override
@@ -161,6 +162,12 @@ public class User implements Serializable
 		for(Link l: favorites) {
 			l.removeFavorite(this);
 		}
+		for(Link l: liked) {
+			l.removeLike(this);
+		}
+		for(Link l: disliked) {
+			l.removeDislike(this);
+		}
 	}
 
 	@Lob
@@ -199,15 +206,6 @@ public class User implements Serializable
 		}
 		return publiclinks;
 	}
-
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	public List<Vote> getVotes() {		
-		return votes;
-	}
-
-	public void setVotes(List<Vote> votes) {
-		this.votes = votes;
-	}	
 	
 	@ManyToMany(mappedBy = "favorited", fetch=FetchType.LAZY)	
 	public List<Link> getFavorites() {
@@ -226,4 +224,37 @@ public class User implements Serializable
 		this.favorites.add(link);
 	}
 	
+	@ManyToMany(mappedBy = "like", fetch=FetchType.LAZY)
+	public List<Link> getLiked() {
+		return liked;
+	}
+
+	public void setLiked(List<Link> liked) {
+		this.liked = liked;
+	}
+
+	public void removeLike(Link link){
+		this.liked.remove(link);	
+	}
+	
+	public void addLike(Link link){
+		this.liked.add(link);
+	}
+	
+	@ManyToMany(mappedBy = "dislike", fetch=FetchType.LAZY)
+	public List<Link> getDisliked() {
+		return disliked;
+	}
+
+	public void setDisliked(List<Link> disliked) {
+		this.disliked = disliked;
+	}
+	
+	public void removeDislike(Link link){
+		this.disliked.remove(link);	
+	}
+	
+	public void addDislike(Link link){
+		this.disliked.add(link);
+	}
 }
