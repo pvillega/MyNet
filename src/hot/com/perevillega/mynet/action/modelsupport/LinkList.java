@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.web.RequestParameter;
 
 import com.perevillega.mynet.action.queries.EnhancedSortEntityQuery;
 import com.perevillega.mynet.model.Link;
@@ -32,6 +33,7 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	private String creator;
 	private String description;
 	private Category category;
+	@RequestParameter
 	private Tag tag;
 	
 	private String title;

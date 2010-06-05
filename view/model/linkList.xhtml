@@ -160,7 +160,17 @@
                 
                 <h:column>
                     <f:facet name="header">Tags</f:facet>
-                    <h:outputText value="#{link.formattedTags()}" />
+                    <ui:repeat value="#{link.tags}" var="tag">
+                 		<s:link 
+                 			propagation="join"
+                 			view="/byTag.xhtml" 
+                 			value="#{tag.name} (#{tag.numLinks})" >
+                 			<f:param name="tag"
+                                value="#{tag}"/>
+                             <s:convertEntity/>          
+                    	</s:link>	   
+                    	#{'  '}               
+          			</ui:repeat>                    
                 </h:column>
                 
                 <h:column>
