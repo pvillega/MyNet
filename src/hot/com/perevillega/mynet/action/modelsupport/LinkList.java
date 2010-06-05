@@ -25,16 +25,19 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 		"lower(link.description) like concat('%',lower(#{linkList.description}),'%')",
 		"link.category = #{linkList.category}",
 		"#{linkList.tag} member of link.tags",
+		"lower(link.name) like  concat('%',lower(#{linkList.search}),'%') or lower(link.url) like concat('%',lower(:el7),'%') or lower(link.description) like concat('%',lower(:el7),'%')",
 		};
 
 	
 	private String name;	
 	private String url;
 	private String creator;
-	private String description;
+	private String description;	
 	private Category category;
 	@RequestParameter
 	private Tag tag;
+	
+	private String search;
 	
 	private String title;
 	private String from;
@@ -77,7 +80,7 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	}
 
 	public void setCategory(Category category) {
-		this.category = category;
+		this.category = category;		
 	}
 
 	public void cleanSearch() {
@@ -132,4 +135,18 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 		setTag(tag);
 		refresh();
 	}
+
+	public void filterBy(Category category) {		
+		setCategory(category);
+		refresh();
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}	
+	
 }
