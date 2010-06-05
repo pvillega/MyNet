@@ -15,8 +15,7 @@ import org.hibernate.validator.Length;
 public class Vote implements Serializable
 {
     private Long id;
-    private Integer version;
-    private String name;
+    private Integer version;    
     private Link link;
     private User user;
     private int value;
@@ -38,15 +37,6 @@ public class Vote implements Serializable
 
     private void setVersion(Integer version) {
         this.version = version;
-    }
-
-    @Length(max = 20)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
     
     @ManyToOne

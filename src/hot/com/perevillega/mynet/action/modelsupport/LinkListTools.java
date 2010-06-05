@@ -73,4 +73,24 @@ public class LinkListTools {
     	
     	linkList.refresh();
     }
+    
+    public void favorite(Link link) {
+    	
+    	link.addFavorite(currentUser);
+    	
+    	entityManager.merge(link);    	
+    	entityManager.flush();    
+    	
+    	linkList.refresh();
+    }
+    
+    public void removeFavorite(Link link) {
+    	
+    	link.removeFavorite(currentUser);
+    	
+    	entityManager.merge(link);    	
+    	entityManager.flush();    
+    	
+    	linkList.refresh();
+    }
 }

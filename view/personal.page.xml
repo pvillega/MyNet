@@ -4,7 +4,7 @@
       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
       
    <begin-conversation join="true"/>
-   <action execute="#{linkList.setEjbql('select link from Link link where link.creator = #{currentUser}')}" />
+   <action execute="#{linkList.setEjbql('select link from Link link where link.creator = #{currentUser} or #{currentUser} member of link.favorited')}" />
    <action execute="#{linkList.setTitle('My links')}" />
    <action execute="#{linkList.setFrom('/personal.xhtml')}" />   
    <action execute="#{linkList.setCreate(true)}" />

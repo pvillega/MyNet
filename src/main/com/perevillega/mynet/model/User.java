@@ -48,6 +48,7 @@ public class User implements Serializable
 	private String description;
 	private boolean selected;
 	private List<Vote> votes = new ArrayList<Vote>(0);
+	private List<Link> favorites = new ArrayList<Link>(0);
 	
 
     @Override
@@ -157,6 +158,9 @@ public class User implements Serializable
 		for(Role role: roles){
 			role.removeUser(this);
 		}
+		for(Link l: favorites) {
+			l.removeFavorite(this);
+		}
 	}
 
 	@Lob
@@ -204,5 +208,22 @@ public class User implements Serializable
 	public void setVotes(List<Vote> votes) {
 		this.votes = votes;
 	}	
+	
+	@ManyToMany(mappedBy = "favorited", fetch=FetchType.LAZY)	
+	public List<Link> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<Link> favorites) {
+		this.favorites = favorites;
+	}	
+	
+	public void removeFavorite(Link link){
+		this.favorites.remove(link);
+	}
+	
+	public void addFavorite(Link link){
+		this.favorites.add(link);
+	}
 	
 }

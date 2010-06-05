@@ -61,6 +61,7 @@ public class Link implements Serializable {
 	private Date dateValidation;
 	private boolean selected;
 	private List<Vote> votes = new ArrayList<Vote>(0);
+	private List<User> favorited = new ArrayList<User>(0);
 	private int valoration;
 	
 	
@@ -291,7 +292,10 @@ public class Link implements Serializable {
 	public void remove() {		
 		for (Tag t : tags) {
 			t.removeLink(this);
-		}		
+		}
+		for(User u: favorited){
+			u.removeFavorite(this);
+		}
 	}
 
 	@ManyToOne
@@ -319,6 +323,27 @@ public class Link implements Serializable {
 			val += vote.getValue();
 		}		
 		return val;
+	}
+	
+	@ManyToMany(fetch=FetchType.LAZY)	
+	public List<User> getFavorited() {
+		return favorited;
+	}
+
+	public void setFavorited(List<User> favorites) {
+		this.favorited = favorites;
+	}
+	
+	public void removeFavorite(User user){
+		this.favorited.remove(user);	
+	}
+	
+	public void addFavorite(User user){
+		this.favorited.add(user);
+	}
+	
+	public boolean linkFavorited(User user) {		
+		return this.favorited.contains(user);
 	}
 	
 }

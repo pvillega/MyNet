@@ -58,7 +58,7 @@
                    value="#{linkList.resultList}"
                    rendered="#{not empty linkList.resultList}"
                    rowClasses="row1,row2" cellspacing="0"                   
-                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10,linkc11,linkc12,linkc13">
+                   columnClasses="linkc1,linkc2,linkc3,linkc4,linkc5,linkc6,linkc7,linkc8,linkc9,linkc10,linkc11,linkc12,linkc13,linkc14">
                                       
                 <h:column>
                     <f:facet name="header"> </f:facet>                    
@@ -189,6 +189,13 @@
 		                </ui:include>
                     </f:facet>
                     <h:outputText value="#{link.hidden?'PRIVATE':'PUBLIC'}" />                                        
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header"> </f:facet>
+                    <h:commandButton value="Remove from favourites" action="#{linkListTools.removeFavorite(link)}" rendered="#{identity.loggedIn and link.linkFavorited(currentUser)}" />
+                    <h:commandButton value="Make favourite!" action="#{linkListTools.favorite(link)}" rendered="#{identity.loggedIn and not(link.linkFavorited(currentUser))}" />
+                    <h:outputText value="  " rendered="#{not identity.loggedIn}" />                                        
                 </h:column>
                 
                 <h:column>
