@@ -30,6 +30,14 @@
                 <h:outputText id="numberUsers" required="false"
                              value="#{roleHome.instance.numUsers}" />
             </s:decorate>
+            
+            <s:decorate id="descriptionField" template="../layout/edit.xhtml">
+                <ui:define name="label">Description</ui:define>
+                <ui:define name="description">that's what this role is for</ui:define>
+                <rich:editor id="descriptionEditor" required="false"                	
+            		value="#{roleHome.instance.description}" >
+            	</rich:editor>
+            </s:decorate>
 
             <div style="clear:both">
             	<span class="required">*</span> 

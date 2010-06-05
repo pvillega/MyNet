@@ -38,7 +38,7 @@
                       value="#{roleList.resultList}"
                    rendered="#{not empty roleList.resultList}"
                    rowClasses="row1,row2" cellspacing="0"
-                   columnClasses="rolec1,rolec2,rolec3,rolec4,rolec5">
+                   columnClasses="rolec1,rolec2,rolec3,rolec4,rolec5,rolec6">
                    
                 <h:column>
                     <f:facet name="header"> </f:facet>                    
@@ -76,6 +76,11 @@
                 <h:column>
                     <f:facet name="header"># Users</f:facet>                    
                     #{role.numUsers}
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">Description</f:facet>                    
+                    <h:outputText value="#{role.shortDescription()}" escape="false" />
                 </h:column>
                 
                 <h:column>

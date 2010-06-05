@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,7 +39,7 @@ public class Role implements Serializable
     private boolean selected;
     private Set<User> users = new HashSet<User>();
     private int numUsers;
- //TODO: add role description?   
+    private String description;
     
 	@Override
 	public int hashCode() {
@@ -142,5 +143,26 @@ public class Role implements Serializable
     	for(User u: this.users) {
     		u.removeRole(this);
     	}		
+	}
+	
+	@Lob
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String shortDescription() {
+		String tmp = "";
+		if (this.description != null) {
+			int endIndex = Math.min(30, this.description.length());
+			tmp = this.description.substring(0, endIndex);
+			if (endIndex >= 30) {
+				tmp += "[...]";
+			}
+		}
+		return tmp;
 	}
 }
