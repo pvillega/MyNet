@@ -112,7 +112,12 @@
             	#{'  '}                      
                 <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn}" />
                 <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn}" />
-            </s:decorate>            
+            </s:decorate>    
+            
+            <s:decorate id="favoritedField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn}" >
+            	<h:commandButton value="Remove from favourites" action="#{linkListTools.removeFavorite(linkHome.instance)}" rendered="#{identity.loggedIn and linkHome.instance.linkFavorited(currentUser)}" />
+                <h:commandButton value="Make favourite!" action="#{linkListTools.favorite(linkHome.instance)}" rendered="#{identity.loggedIn and not(linkHome.instance.linkFavorited(currentUser))}" />
+            </s:decorate>        
             
             <div style="clear:both">
             	<h:outputText value="*" styleClass="required" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}" />
