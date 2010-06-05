@@ -27,8 +27,8 @@
             </s:decorate>
             
             <s:decorate id="anonCategoryField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
-                <ui:define name="label">Category</ui:define>                
-                <h:outputText value="#{linkHome.instance.category.name}" />                                
+                <ui:define name="label">Category</ui:define>
+                <h:commandLink value="#{linkHome.instance.category.name}" action="#{search.search(linkHome.instance.category)}" />
             </s:decorate>
             
             <s:decorate id="creatorField" template="../layout/edit.xhtml" rendered="#{linkHome.instance.creator ne null}">
@@ -92,20 +92,16 @@
             <s:decorate id="tagListField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and currentUser.id eq linkHome.instance.creator.id}">
                 <ui:define name="label"> </ui:define>
                 <ui:define name="description">are the current tags</ui:define>
-				<b><h:outputText value="#{linkHome.instance.formattedTags()}" /></b>
+				<ui:repeat value="#{linkHome.instance.tags}" var="tag">					
+               		<h:commandLink value="#{tag.name} (#{tag.numLinks})" action="#{search.search(tag)}" />
+                  	#{'  '}               
+          		</ui:repeat>  
             </s:decorate>
             
             <s:decorate id="anonTagListField" template="../layout/edit.xhtml" rendered="#{not identity.loggedIn or currentUser.id ne linkHome.instance.creator.id}">
                 <ui:define name="label">Tags</ui:define>                
-				<ui:repeat value="#{link.tags}" var="tag">
-               		<s:link 
-               			propagation="join"
-               			view="/byTag.xhtml" 
-               			value="#{tag.name} (#{tag.numLinks})" >
-               			<f:param name="tag"
-                              value="#{tag}"/>
-                           <s:convertEntity/>          
-                  	</s:link>	   
+				<ui:repeat value="#{linkHome.instance.tags}" var="tag">
+               		<h:commandLink value="#{tag.name} (#{tag.numLinks})" action="#{search.search(tag)}" />
                   	#{'  '}               
           		</ui:repeat>           
             </s:decorate>

@@ -34,9 +34,8 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 	private String creator;
 	private String description;	
 	private Category category;
-	@RequestParameter
 	private Tag tag;
-	
+			
 	private String search;
 	
 	private String title;
@@ -89,6 +88,7 @@ public class LinkList extends EnhancedSortEntityQuery<Link>
 		this.creator = null;
 		this.description = null;
 		this.category = null;
+		this.search = null;
 	}
 
 	public String getTitle() {

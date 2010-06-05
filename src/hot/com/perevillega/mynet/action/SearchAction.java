@@ -11,6 +11,8 @@ import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 
 import com.perevillega.mynet.action.modelsupport.LinkList;
+import com.perevillega.mynet.model.Category;
+import com.perevillega.mynet.model.Tag;
 
 @Name("search")
 @Scope(ScopeType.CONVERSATION)
@@ -30,6 +32,18 @@ public class SearchAction {
 		linkList.setSearch(terms);
 		linkList.refresh();		
 		return "/search.xhtml"; 
+	}
+	
+	public String search(Tag tag){
+		linkList.setTag(tag);
+		linkList.refresh();		
+		return "/byTag.xhtml"; 
+	}
+	
+	public String search(Category category){
+		linkList.setCategory(category);
+		linkList.refresh();		
+		return "/byCategory.xhtml"; 
 	}
 
 	public String getTerms() {

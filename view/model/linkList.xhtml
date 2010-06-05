@@ -119,7 +119,7 @@
         			        <ui:param name="propertyPath" value="link.category.name asc"/>
 		                </ui:include>
                     </f:facet>
-                    #{link.category.name}                   	                
+                    <h:commandLink value="#{link.category.name}" action="#{search.search(link.category)}" />                                       	                
                 </h:column>
                 
                 <h:column>
@@ -161,14 +161,7 @@
                 <h:column>
                     <f:facet name="header">Tags</f:facet>
                     <ui:repeat value="#{link.tags}" var="tag">
-                 		<s:link 
-                 			propagation="join"
-                 			view="/byTag.xhtml" 
-                 			value="#{tag.name} (#{tag.numLinks})" >
-                 			<f:param name="tag"
-                                value="#{tag}"/>
-                             <s:convertEntity/>          
-                    	</s:link>	   
+                    	<h:commandLink value="#{tag.name} (#{tag.numLinks})" action="#{search.search(tag)}" />                 		
                     	#{'  '}               
           			</ui:repeat>                    
                 </h:column>
