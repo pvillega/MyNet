@@ -20,7 +20,8 @@
    <body>
 	  <rich:toolBar>
 	     <rich:toolBarGroup>		        
-	        <s:link id="amenuHomeId" view="/home.xhtml" value="MyNET" propagation="none" style="font-size: large;font-weight: bold;text-decoration: none;" />		        
+	        <s:link id="amenuHomeId" view="/home.xhtml" value="MyNET" propagation="none" style="font-size: large;font-weight: bold;text-decoration: none;" />
+	        <s:link id="rssFeedId" view="/rss.xhtml" value="" propagation="none"><h:graphicImage value="/img/RSS.gif"/></s:link>		        
 	     </rich:toolBarGroup>    
 	     <rich:toolBarGroup location="right">
 	        <s:link id="menuWelcomeId" view="/user/profile.xhtml" value="Profile: #{credentials.username}" rendered="#{identity.loggedIn}" propagation="none" >
@@ -56,7 +57,7 @@
          <ui:insert name="body"/>
       </div>
       
-      <div class="footer">
+      <div class="footer">      	 
          <p>Powered by <a href="http://seamframework.org">Seam</a> #{org.jboss.seam.version} and <a href="http://www.jboss.org/jbossrichfaces">RichFaces</a></p>
          <s:fragment rendered="#{init.debug or s:hasRole('admin')}">
          <a:log hotkey="D"/>

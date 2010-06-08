@@ -1,0 +1,21 @@
+<r:feed 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:r="http://jboss.com/products/seam/rss"
+	title="#{rss.feed.title}"
+	uid="#{rss.feed.uid}"
+	subtitle="#{rss.feed.subtitle}"
+	updated="#{rss.feed.updated}"
+	link="#{rss.feed.link}">
+	<ui:repeat value="#{rss.feed.entries}" var="link">
+		<r:entry
+			uid="#{entry.id}"
+			title="#{link.name}"
+			link="#{link.url}"
+			author="#{link.creator}"
+			summary="#{link.description}"
+			published="#{link.date}"
+			updated="#{link.dateValidation}"
+		/>
+	</ui:repeat>
+</r:feed>

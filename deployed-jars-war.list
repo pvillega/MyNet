@@ -11,6 +11,16 @@ jsf-facelets.jar
 jxl.jar
 richfaces-impl.jar
 richfaces-ui.jar
+yarfraw.jar
+#jaxb-api.jar
+#jaxrs-api.jar
+#jaxws-api.jar
+commons-httpclient.jar
+commons-io.jar
+commons-lang.jar
+commons-codec.jar
+commons-collections.jar
+jboss-seam-rss.jar
 # You can remove the JARs for themes you aren't using
 darkX.jar
 glassX.jar
