@@ -51,14 +51,16 @@ public class LinkHome extends EntityHome<Link> {
 
 	@Override
 	public void create() {
-		super.create();
+		super.create();		
 	}
 
 	@Override
 	protected Link createInstance() {
 		Link link = super.createInstance();
 		link.setDate(new Date());
-
+		if(currentUser != null) {
+			link.setCreator(currentUser);
+		}
 		return link;
 	}
 
@@ -84,7 +86,7 @@ public class LinkHome extends EntityHome<Link> {
 			StringTokenizer st = new StringTokenizer(taglist, ",");
 			while (st.hasMoreTokens()) {
 				String name = st.nextToken().trim();
-
+					
 				Query queryTagByName = em.createNamedQuery("findTagByName");
 				queryTagByName.setParameter("name", name);
 				Collection tags = queryTagByName.getResultList();
@@ -93,7 +95,9 @@ public class LinkHome extends EntityHome<Link> {
 					// existing tag, we only take the first one
 					Iterator it = tags.iterator();
 					Tag tag = (Tag) it.next();
-					instance.addTag(tag);
+					if(!instance.getTags().contains(tag)) {
+						instance.addTag(tag);
+					}
 				} else {
 					// a new tag
 					Tag tag = new Tag();
