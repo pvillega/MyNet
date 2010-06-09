@@ -72,4 +72,17 @@ public class UserHome extends EntityHome<User>
     	return super.update();
     }
     
+    
+    @Override
+    public String persist() {
+    	if (!passwordBean.verify()) {			
+			InvalidValue iv = new InvalidValue("Confirmation password does not match", PasswordBean.class, "confirm", null, null);
+			facesMessages.add(iv);
+			return null;
+		}
+    	if(!"".equals(passwordBean.getPassword().trim())) {
+    		instance.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));
+    	}
+    	return super.persist();
+    }
 }
