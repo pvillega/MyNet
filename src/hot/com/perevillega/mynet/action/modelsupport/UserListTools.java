@@ -33,11 +33,11 @@ public class UserListTools {
 	
     
     public void remove(User user) {  	
-    	entityManager.merge(user);
+    	//entityManager.merge(user);
     	
     	user.remove();
     	entityManager.remove(user);
-    	entityManager.flush();
+    	//entityManager.flush();
     	
     	userList.refresh();    	
     }

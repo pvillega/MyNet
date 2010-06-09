@@ -110,16 +110,16 @@
             	<ui:define name="label">Valoration</ui:define>
             	<b><h:outputText value="[#{linkHome.instance.valoration()}]" /></b>    
             	#{'  '}                      
-                <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn and not linkHome.instance.like.contains(currentUser)}" />
+                <h:commandButton action="#{linkListTools.vote(linkHome.instance,1)}" value="Like!" rendered="#{identity.loggedIn and linkHome.managed and not linkHome.instance.like.contains(currentUser)}" />
                 <h:outputText value="Love It" rendered="#{identity.loggedIn and linkHome.instance.like.contains(currentUser)}" />
                 #{'  '}
-                <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn and not linkHome.instance.dislike.contains(currentUser)}" />
+                <h:commandButton action="#{linkListTools.vote(linkHome.instance,-1)}" value="Hate!" rendered="#{identity.loggedIn and linkHome.managed and not linkHome.instance.dislike.contains(currentUser)}" />
                 <h:outputText value="Hate It" rendered="#{identity.loggedIn and linkHome.instance.dislike.contains(currentUser)}" />
             </s:decorate>    
             
-            <s:decorate id="favoritedField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn}" >
-            	<h:commandButton value="Remove from favourites" action="#{linkListTools.removeFavorite(linkHome.instance)}" rendered="#{identity.loggedIn and linkHome.instance.linkFavorited(currentUser)}" />
-                <h:commandButton value="Make favourite!" action="#{linkListTools.favorite(linkHome.instance)}" rendered="#{identity.loggedIn and not(linkHome.instance.linkFavorited(currentUser))}" />
+            <s:decorate id="favoritedField" template="../layout/edit.xhtml" rendered="#{identity.loggedIn and linkHome.managed}" >
+            	<h:commandButton value="Remove from favourites" action="#{linkListTools.removeFavorite(linkHome.instance)}" rendered="#{identity.loggedIn and linkHome.managed and linkHome.instance.linkFavorited(currentUser)}" />
+                <h:commandButton value="Make favourite!" action="#{linkListTools.favorite(linkHome.instance)}" rendered="#{identity.loggedIn and linkHome.managed and not(linkHome.instance.linkFavorited(currentUser))}" />
             </s:decorate>        
             
             <div style="clear:both">

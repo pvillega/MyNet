@@ -365,6 +365,10 @@ public class Link implements Serializable {
 	public void addLike(User user){
 		this.like.add(user);
 	}
+	
+	public boolean linkLiked(User user) {		
+		return this.like.contains(user);
+	}
 
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="Links_Disliked")
@@ -382,6 +386,10 @@ public class Link implements Serializable {
 	
 	public void addDislike(User user){
 		this.dislike.add(user);
+	}
+	
+	public boolean linkDisliked(User user) {		
+		return this.dislike.contains(user);
 	}
 	
 	public int valoration() {				

@@ -58,7 +58,7 @@ public class RegisterAction {
 			return null;
 		}
 		
-		newuser.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));
+		newuser.setPasswordHash(passwordManager.hash(passwordBean.getPassword()));		
 		entityManager.persist(newuser);
 		if (Events.exists()) {
 			Events.instance().raiseTransactionSuccessEvent("golferRegistered", newuser);

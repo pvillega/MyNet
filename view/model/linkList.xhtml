@@ -176,11 +176,11 @@
                     </f:facet>
                     <b><h:outputText value="[#{link.valoration()}]" /></b>
                     #{'  '}                          
-                    <h:commandButton action="#{linkListTools.vote(link,1)}" value="Like!" rendered="#{identity.loggedIn and not link.like.contains(currentUser)}" />
-                    <h:outputText value="Love It" rendered="#{identity.loggedIn and link.like.contains(currentUser)}" />
+                    <h:commandButton action="#{linkListTools.vote(link,1)}" value="Like!" rendered="#{identity.loggedIn and not link.linkLiked(currentUser)}" />
+                    <h:outputText value="Love It" rendered="#{identity.loggedIn and link.linkLiked(currentUser)}" />
                     #{'  '}
-                    <h:commandButton action="#{linkListTools.vote(link,-1)}" value="Hate!" rendered="#{identity.loggedIn and not link.dislike.contains(currentUser)}" />
-                    <h:outputText value="Hate It" rendered="#{identity.loggedIn and link.dislike.contains(currentUser)}" />                                     
+                    <h:commandButton action="#{linkListTools.vote(link,-1)}" value="Hate!" rendered="#{identity.loggedIn and not link.linkDisliked(currentUser)}" />
+                    <h:outputText value="Hate It" rendered="#{identity.loggedIn and link.linkDisliked(currentUser)}" />                                     
                 </h:column>
                 
                 <h:column>
