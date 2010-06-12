@@ -55,7 +55,7 @@ import com.perevillega.mynet.action.validators.URI;
 	@NamedQuery(
 		    name="findAllLinks",
 		    query="SELECT OBJECT(link) FROM Link link"
-		    	),	
+		    	)	
 	})
 public class Link implements Serializable {
 

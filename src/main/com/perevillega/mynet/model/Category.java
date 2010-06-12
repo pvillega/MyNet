@@ -44,10 +44,10 @@ import org.hibernate.validator.NotNull;
 	@NamedQuery(
 		    name="findCategoryByName",
 		    query="SELECT OBJECT(category) FROM Category category WHERE category.name = :name"
-		    	),
-	})
+		    	)
+	})	
 @Table(uniqueConstraints = {
-		@UniqueConstraint(columnNames = "name"),
+		@UniqueConstraint(columnNames = "name")
 })
 public class Category implements Serializable
 {

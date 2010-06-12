@@ -45,7 +45,7 @@ import org.hibernate.validator.NotNull;
 	    	)
 })	    	
 @Table(uniqueConstraints = {
-		@UniqueConstraint(columnNames = "name"),
+		@UniqueConstraint(columnNames = "name")
 })
 public class Tag implements Serializable
 {

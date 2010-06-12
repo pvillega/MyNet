@@ -35,7 +35,7 @@ import org.hibernate.validator.NotNull;
 
 @Entity
 @Table(uniqueConstraints = {
-		@UniqueConstraint(columnNames = "name"),		
+		@UniqueConstraint(columnNames = "name")		
 	})
 @NamedQueries({
 @NamedQuery(
