@@ -10,14 +10,10 @@
 
 	<ui:define name="body">
 			
-		<rich:layout>		  
-		  
-		  <rich:layoutPanel position="center" width="800">
-		       <ui:include src="model/linkList.xhtml"/>
-		  </rich:layoutPanel>
-		  
-		  <rich:layoutPanel position="left" width="210">
-		  		<h:form id="filterByCategory">
+		<table>
+			<tr>
+				<td width="210px" valign="top">	
+					<h:form id="filterByCategory">
 		  	  		<!-- displays a list of tags ordered by popularity and limited -->	       
 				  	<rich:panel>
 				  	
@@ -35,10 +31,13 @@
 				       	</rich:tree>
 				
 					</rich:panel>
-				</h:form>
-		  </rich:layoutPanel>		  
-		</rich:layout>
-
+				</h:form>	
+				</td>			
+		  		<td>
+		  			<ui:include src="model/linkList.xhtml"/>
+		  		</td>
+			</tr>
+		</table>
 	</ui:define>
 
 </ui:composition>
