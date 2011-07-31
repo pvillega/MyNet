@@ -1,0 +1,41 @@
+# Java
+*.class
+
+# Mercurial
+.hg/**/*
+
+# JBoss
+jboss/server/all/deploy/project.ext
+jboss/server/default/deploy/project.ext
+jboss/server/minimal/deploy/project.ext
+jboss/server/all/log/*.log
+jboss/server/all/tmp/**/*
+jboss/server/all/data/**/*
+jboss/server/all/work/**/*
+jboss/server/default/log/*.log
+jboss/server/default/tmp/**/*
+jboss/server/default/data/**/*
+jboss/server/default/work/**/*
+jboss/server/minimal/log/*.log
+jboss/server/minimal/tmp/**/*
+jboss/server/minimal/data/**/*
+jboss/server/minimal/work/**/*
+
+# Seam
+bootstrap/data
+bootstrap/tmp
+classes/ # all class files
+dist/ # contains generated war files for deployment
+exploded-archives/ # war content generation during deploy (or explode)
+test-build/ # test compilation (ant target for Seam)
+test-output/ # test results
+test-report/ # test report generation for, e.g., Hudson
+target/ # maven output folder
+temp-testng-customsuite.xml # generated when running test cases under Eclipse
+
+# Thanks to @VonC and @kraftan for their helpful answers on a related question
+# on StackOverflow.com:
+# http://stackoverflow.com/questions/4176687
+# /what-is-the-recommended-source-control-ignore-pattern-for-seam-projects
+
+
